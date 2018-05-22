@@ -48,16 +48,18 @@ SerialPort.list((err, ports) => {
     })
 
     // Switches the port into "flowing mode"
-    // port.on('data', function (data) {
-    //   console.log('Data:', data);
-    // });
-    //
+    port.on('data', function (data) {
+      console.log('Data:', data);
+    });
+
     // Read data that is available but keep the stream from entering "flowing mode"
-    // port.on('readable', function() {
-    //     console.log('Data:', port.read());
-    //     // TODO prendere i dati e formattarli
-    //     // saveInfo(0, info);
-    // });
+    port.on('readable', function() {
+        console.log('Data:', port.read());
+        // TODO: prendere i dati e formattarli
+        // TODO: saveInfo(0, info);
+        // TODO: controllare con lo scraper se i valori sono nella norma
+        // TODO: res.send informazioni
+    });
 
     app.get("/", function(req, res) {
         console.log("/home");
