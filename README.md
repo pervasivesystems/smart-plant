@@ -1,6 +1,6 @@
 # smart-plant
 
-Open Main folder in the terminal and run:
+In Linux open Main folder in the terminal and run:
 
 `npm install`
 
@@ -8,7 +8,7 @@ Open Main folder in the terminal and run:
 
 run:
 
-`node main.js`
+`sudo node main.js`
 
 or with npm
 
