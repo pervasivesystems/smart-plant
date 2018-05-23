@@ -7,8 +7,8 @@ let token = ''
 readStream.on('data', function(chunk) {
     token += chunk;
 }).on('end', function() {
-    console.log(token);
-    bot = new TeleBot(token);
+    console.log(token.trim());
+    bot = new TeleBot(token.trim());
 
     bot.on('text', (msg) => msg.reply.text(msg.text));
 
