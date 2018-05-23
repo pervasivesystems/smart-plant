@@ -114,7 +114,13 @@ function findInfo(plant, callback) {
     });
 }
 
+function search(commonname, callback){
+    commonSearch(commonname, (err, result)=>{
+        findInfo(result[0].link, callback);
+    });
+}
 
 exports.commonSearch = commonSearch;
 exports.botanicSearch = botanicSearch;
 exports.findInfo = findInfo;
+exports.search = search;

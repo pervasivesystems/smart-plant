@@ -4,12 +4,13 @@
     "description": "",
     "main": "main.js",
     "scripts": {
-        "start": "sudo node main.js",
+        "start": "sudo \"$(which node)\" main.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "pervasive systems",
     "license": "ISC",
     "dependencies": {
+        "cheerio": "^1.0.0-rc.2",
         "express": "^4.16.3",
         "firebase-admin": "^5.12.1",
         "serialport": "^6.2.0"

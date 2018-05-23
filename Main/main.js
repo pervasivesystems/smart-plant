@@ -2,6 +2,7 @@ var admin = require('firebase-admin');
 var SerialPort = require('serialport');
 var express = require('express');
 var request = require('request');
+var wood_db = require('./wood_db_scraper.js');
 
 var serviceAccount = require('./smart-plant-75235-firebase-adminsdk-pcxba-1c74fefac1.json');
 var app = express();
@@ -19,6 +20,7 @@ var port;
 var id = 0;
 var elem = {
     "plantID": 0,
+    "plant":"rose",
     "info": [{
         "date": 0,
         "temperature": 0,
@@ -28,62 +30,80 @@ var elem = {
 };
 
 
+
 // Start the Main
 console.log("Start Main");
+const parsers = SerialPort.parsers;
+
+// Use a `\r\n` as a line terminator
+const parser = new parsers.Readline({
+  delimiter: '\r\n'
+});
+
 
 SerialPort.list((err, ports) => {
     // trovo la porta con stm attaccato
     for (var i = 0; i < ports.length; i++) {
         if (ports[i].manufacturer === "STMicroelectronics") {
             port = new SerialPort(ports[i].comName, {
-                baudRate: 19200
+                baudRate: 230400
             });
             break;
         }
     }
-
     // Open errors will be emitted as an error event
     port.on('error', function(err) {
         console.log('Error: ', err.message);
     })
+    port.pipe(parser);
 
-    // Switches the port into "flowing mode"
-    port.on('data', function (data) {
-      console.log('Data:', data);
+    parser.on('data', function(data){ //tmp,lgt,ph
+        data = "1,2,3" // commentare quando ci sarà la scheda vera
+        console.log(data);
+        var info = data.split(',');
+        elem.info.temperature = info[0];
+        elem.info.light = info[1];
+        elem.info.ph = info[2];
+        search(elem.plant, (err, result)=>{
+            if(info[2]>result.soilph.max){
+
+            }
+            if(info[2]<result.soilph.min){
+
+            }
+
+        });
+        // saveInfo(0, elem.info);
     });
 
-    // Read data that is available but keep the stream from entering "flowing mode"
-    port.on('readable', function() {
-        console.log('Data:', port.read());
-        // TODO: prendere i dati e formattarli
-        // TODO: saveInfo(0, info);
-        // TODO: controllare con lo scraper se i valori sono nella norma
-        // TODO: res.send informazioni
-    });
+
+
 
     app.get("/", function(req, res) {
         console.log("/home");
         res.send("ok");
     })
 
-    app.get("/addPlant", function(req, res) {
-        console.log("/addplant");
-        addPlant(elem);
-        res.send("ok");
-    })
 
-    app.get("/water/:command", function(req, res) {
+    app.get("/water", function(req, res) {
         console.log("/water");
         // water command
-        res.send("ok");
+        port.write("1", function(err) { //
+            if (err) {
+                res.send('err');
+                return console.log('Error on write: ', err.message);
+            }
+            console.log('message written');
+            res.send("ok");
+        });
     })
 
-    app.get("/info/:id", function(req, res) {
-        console.log("/info", req.params.id);
-        retrivePlant(req.params.id, function(err, info){
-            if (err) res.send(err)
-            else res.json(info);
-        });
+    app.get("/info/:name", function(req, res) {
+        console.log("/info");
+        wood_db.search(req.params.name,(err, result)=>{
+            if(err) res.send(err);
+            else    res.send(result);
+        })
     })
 
     console.log('Listening on 3000');
@@ -92,6 +112,27 @@ SerialPort.list((err, ports) => {
 })
 
 
+// save data in firebase db
+function saveInfo(id, info) {
+    plants.once("value", function(snapshot) {
+        var json = snapshot.val();
+        for (var i = 0; i < json.length; i++) {
+            if(json[i].plantID == id){
+                json.push(info);
+                plants.set(json);
+                break;
+            }
+        }
+    }, function(errorObject) {
+        console.log("The read failed: " + errorObject.code);
+    });
+}
+
+
+// setPlant(elem);
+
+
+// NOT USED
 function retrivePlant(id, callback){
     plants.once("value", function(snapshot) {
         if (snapshot.val() === undefined) {
@@ -102,9 +143,9 @@ function retrivePlant(id, callback){
         for (var i = 0; i < json.length; i++) {
             if(json[i].plantID == id){
                 if (json[i].info === undefined)
-                    callback(null, []);
+                callback(null, []);
                 else
-                    callback(null, json[i].info);
+                callback(null, json[i].info);
                 return;
             }
         }
@@ -132,16 +173,10 @@ function addPlant(elem) {
     });
 }
 
-function saveInfo(id, info) {
+function setPlant(elem) {
     plants.once("value", function(snapshot) {
-        var json = snapshot.val();
-        for (var i = 0; i < json.length; i++) {
-            if(json[i].plantID == id){
-                json.push(info);
-                plants.set(json);
-                break;
-            }
-        }
+        elem.info=[];
+        plants.set(elem);
     }, function(errorObject) {
         console.log("The read failed: " + errorObject.code);
     });
