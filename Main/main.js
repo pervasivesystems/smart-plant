@@ -21,7 +21,7 @@ var id = 0;
 var elem = {
     "plantID": 0,
     "plant":"rose",
-    "info": [{
+    "status": [{
         "date": 0,
         "temperature": 0,
         "light": 0,
@@ -60,30 +60,26 @@ SerialPort.list((err, ports) => {
     parser.on('data', function(data){ //tmp,lgt,ph
         data = "1,2,3" // commentare quando ci sarà la scheda vera
         console.log(data);
-        var info = data.split(',');
-        elem.info.temperature = info[0];
-        elem.info.light = info[1];
-        elem.info.ph = info[2];
+        var status = data.split(',');
+        elem.status.temperature = status[0];
+        elem.status.light = status[1];
+        elem.status.ph = status[2];
         search(elem.plant, (err, result)=>{
-            if(info[2]>result.soilph.max){
+            if(status[2]>result.soilph.max){
 
             }
-            if(info[2]<result.soilph.min){
+            if(status[2]<result.soilph.min){
 
             }
 
         });
-        // saveInfo(0, elem.info);
+        saveInfo(0, elem.status);
     });
-
-
-
 
     app.get("/", function(req, res) {
         console.log("/home");
         res.send("ok");
     })
-
 
     app.get("/water", function(req, res) {
         console.log("/water");
@@ -98,12 +94,38 @@ SerialPort.list((err, ports) => {
         });
     })
 
-    app.get("/info/:name", function(req, res) {
-        console.log("/info");
-        wood_db.search(req.params.name,(err, result)=>{
+    app.get("/status", function(req, res) {
+        console.log("/status");
+        retrivePlant(elem.plantID, (err, result)=>{
+            res.json(result);
+        });
+    })
+
+    app.get("/start_sensor", function(req, res) {
+        console.log("/start_sensor");
+        // water command
+        port.write("3", function(err) { //
+            if (err) {
+                res.send('err');
+                return console.log('Error on write: ', err.message);
+            }
+            console.log('message written');
+            res.send("ok");
+        });
+    })
+
+    app.get("/info", function(req, res) {
+        console.log("/status");
+        wood_db.search(elem.plant,(err, result)=>{
             if(err) res.send(err);
             else    res.send(result);
         })
+    })
+
+    app.get("/setPlant/:name", function(req, res) {
+        console.log("/setPlant");
+        elem.name=req.params.name;
+        res.send("ok");
     })
 
     console.log('Listening on 3000');
@@ -111,14 +133,15 @@ SerialPort.list((err, ports) => {
 
 })
 
+// setPlant(elem);
 
 // save data in firebase db
-function saveInfo(id, info) {
+function saveInfo(id, status) {
     plants.once("value", function(snapshot) {
         var json = snapshot.val();
         for (var i = 0; i < json.length; i++) {
             if(json[i].plantID == id){
-                json.push(info);
+                json.push(status);
                 plants.set(json);
                 break;
             }
@@ -128,11 +151,7 @@ function saveInfo(id, info) {
     });
 }
 
-
-// setPlant(elem);
-
-
-// NOT USED
+// retrive all "status" of the plant
 function retrivePlant(id, callback){
     plants.once("value", function(snapshot) {
         if (snapshot.val() === undefined) {
@@ -142,10 +161,10 @@ function retrivePlant(id, callback){
         var json = snapshot.val();
         for (var i = 0; i < json.length; i++) {
             if(json[i].plantID == id){
-                if (json[i].info === undefined)
+                if (json[i].status === undefined)
                 callback(null, []);
                 else
-                callback(null, json[i].info);
+                callback(null, json[i].status);
                 return;
             }
         }
@@ -156,11 +175,22 @@ function retrivePlant(id, callback){
     });
 }
 
+// save the first plant in db
+function setPlant(elem) {
+    plants.once("value", function(snapshot) {
+        // elem.status=[];
+        plants.set(elem);
+    }, function(errorObject) {
+        console.log("The read failed: " + errorObject.code);
+    });
+}
+
+// NOT used
 function addPlant(elem) {
     plants.once("value", function(snapshot) {
         elem.plantID=id;
         id++;
-        elem.info = [];
+        elem.status = [];
         if (snapshot.val() === undefined) {
             plants.set([elem]);
             return;
@@ -168,15 +198,6 @@ function addPlant(elem) {
         var json = snapshot.val();
         json.push(elem);
         plants.set(json);
-    }, function(errorObject) {
-        console.log("The read failed: " + errorObject.code);
-    });
-}
-
-function setPlant(elem) {
-    plants.once("value", function(snapshot) {
-        elem.info=[];
-        plants.set(elem);
     }, function(errorObject) {
         console.log("The read failed: " + errorObject.code);
     });
