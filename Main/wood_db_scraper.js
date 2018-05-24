@@ -116,7 +116,13 @@ function findInfo(plant, callback) {
 
 function search(commonname, callback){
     commonSearch(commonname, (err, result)=>{
-        findInfo(result[0].link, callback);
+        findInfo(result[0].link, (err,res)=>{
+            var json = result[0];
+            json.info=res;
+            json.img = "http://woodyplants.cals.cornell.edu" + json.img;
+            json.link = "http://woodyplants.cals.cornell.edu" + json.link;
+            callback(err, json);
+        });
     });
 }
 

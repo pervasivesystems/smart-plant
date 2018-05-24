@@ -67,25 +67,6 @@ SerialPort.list((err, ports) => {
     })
     port.pipe(parser);
 
-    parser.on('data', function(data){ //tmp,lgt,ph
-        data = "1,2,3" // commentare quando ci sarà la scheda vera
-        console.log(data);
-        var status = data.split(',');
-        elem.status.temperature = status[0];
-        elem.status.light = status[1];
-        elem.status.ph = status[2];
-        wood_db.search(elem.plant, (err, result)=>{
-            if(status[2]>result.soilph.max){
-                bot.telegram.sendMessage(chatId, "PH too Basic!")
-            }
-            if(status[2]<result.soilph.min){
-                bot.telegram.sendMessage(chatId, "PH too Acid!")
-            }
-            // TODO: controllare gli altri parametri, se manca acqua annaffiare
-
-        });
-        saveInfo(0, elem.status);
-    });
 
     readStream.on('data', function(chunk) {
         token += chunk;
@@ -93,6 +74,26 @@ SerialPort.list((err, ports) => {
         // console.log(token.trim());
         bot = new Telegraf(token.trim());
         bot.use(commandParts());
+
+        parser.on('data', function(data){ //tmp,lgt,ph
+            data = "1,2,3" // commentare quando ci sarà la scheda vera
+            console.log(data);
+            var status = data.split(',');
+            elem.status.temperature = status[0];
+            elem.status.light = status[1];
+            elem.status.ph = status[2];
+            // wood_db.search(elem.plant, (err, result)=>{
+            if(status[2]>result.info.soilph.max){
+                bot.telegram.sendMessage(chatId, "PH too Basic!")
+            }
+            if(status[2]<result.info.soilph.min){
+                bot.telegram.sendMessage(chatId, "PH too Acid!")
+            }
+            // TODO: controllare gli altri parametri, se manca acqua annaffiare
+
+            saveInfo(0, elem.status);
+        });
+
 
         bot.start((ctx) => {
             chatId=ctx.chat.id;
@@ -139,7 +140,17 @@ SerialPort.list((err, ports) => {
                 if(err) ctx.reply('error');
                 else{
                     // TODO: formattare bene in una stringa
-                    ctx.reply(JSON.stringify(result));
+                    var string = "*"+elem.plant+"*\n";
+                    string += "Light: "+result.info.light.description;
+                    string += "Water: "+result.info.water.description;
+                    string += "Soil PH: "+result.info.soilph.description;
+                    console.log(result.img);
+                    // string += "![alt tag]("+ result.img + ")"
+
+                    // bot.telegram.sendMessage(ctx.chat.id, string, {parse_mode:"Markdown"})
+                    bot.telegram.sendPhoto(ctx.chat.id, result.img)
+
+                    // ctx.reply(JSON.stringify(result));
                 }
             })
         })
@@ -163,87 +174,64 @@ SerialPort.list((err, ports) => {
 
         bot.startPolling();
 
-        leggi();
 
 
-
-    app.get("/", function(req, res) {
-        console.log("/home");
-        res.send("ok");
-    })
-
-    app.get("/water", function(req, res) {
-        console.log("/water");
-        // water command
-        port.write("1", function(err) { //
-            if (err) {
-                res.send('err');
-                return console.log('Error on write: ', err.message);
-            }
-            console.log('message written');
+        app.get("/", function(req, res) {
+            console.log("/home");
             res.send("ok");
-        });
-    })
-
-    app.get("/status", function(req, res) {
-        console.log("/status");
-        retrivePlant(elem.plantID, (err, result)=>{
-            res.json(result);
-        });
-    })
-
-    app.get("/start_sensor", function(req, res) {
-        console.log("/start_sensor");
-        // water command
-        port.write("3", function(err) { //
-            if (err) {
-                res.send('err');
-                return console.log('Error on write: ', err.message);
-            }
-            console.log('message written');
-            res.send("ok");
-        });
-    })
-
-    app.get("/info", function(req, res) {
-        console.log("/info");
-        wood_db.search(elem.plant,(err, result)=>{
-            if(err) res.send(err);
-            else    res.send(result);
         })
-    })
 
-    app.get("/setPlant/:name", function(req, res) {
-        console.log("/setPlant");
-        elem.name=req.params.name;
-        res.send("ok");
-    })
+        app.get("/water", function(req, res) {
+            console.log("/water");
+            // water command
+            port.write("1", function(err) { //
+                if (err) {
+                    res.send('err');
+                    return console.log('Error on write: ', err.message);
+                }
+                console.log('message written');
+                res.send("ok");
+            });
+        })
 
-    // console.log('Listening on 3000');
-    // app.listen(3000);
+        app.get("/status", function(req, res) {
+            console.log("/status");
+            retrivePlant(elem.plantID, (err, result)=>{
+                res.json(result);
+            });
+        })
+
+        app.get("/start_sensor", function(req, res) {
+            console.log("/start_sensor");
+            // water command
+            port.write("3", function(err) { //
+                if (err) {
+                    res.send('err');
+                    return console.log('Error on write: ', err.message);
+                }
+                console.log('message written');
+                res.send("ok");
+            });
+        })
+
+        app.get("/info", function(req, res) {
+            console.log("/info");
+            wood_db.search(elem.plant,(err, result)=>{
+                if(err) res.send(err);
+                else    res.send(result);
+            })
+        })
+
+        app.get("/setPlant/:name", function(req, res) {
+            console.log("/setPlant");
+            elem.name=req.params.name;
+            res.send("ok");
+        })
+
+        // console.log('Listening on 3000');
+        // app.listen(3000);
     })
 })
-
-
-function leggi(){
-    data = "1,2,3" // commentare quando ci sarà la scheda vera
-    console.log(data);
-    var status = data.split(',');
-    elem.status.temperature = status[0];
-    elem.status.light = status[1];
-    elem.status.ph = status[2];
-    wood_db.search(elem.plant, (err, result)=>{
-        if(status[2]>result.soilph.max){
-            bot.telegram.sendMessage(chatId, "PH too Basic!")
-        }
-        if(status[2]<result.soilph.min){
-            bot.telegram.sendMessage(chatId, "PH too Acid!")
-        }
-        // TODO: controllare gli altri parametri, se manca acqua annaffiare
-
-    });
-    saveInfo(0, elem.status);
-}
 
 
 // setPlant(elem);
