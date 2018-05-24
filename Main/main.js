@@ -113,15 +113,13 @@ SerialPort.list((err, ports) => {
              ctx.reply('Hide keyboard', Markup.removeKeyboard(true).extra())
         })
         bot.hears('l', ctx => {
-             leggi()
+            chatId=ctx.chat.id
+            wood_db.search(elem.plant, (err, result)=>{
+                woody=result;
+                leggi()
+            })
         })
-        bot.hears('s', ctx => {
-             chatId=ctx.chat.id
-             wood_db.search(elem.plant, (err, result)=>{
-                 woody=result;
-             })
-        })
-
+        
 
         bot.start((ctx) => {
             chatId=ctx.chat.id;
