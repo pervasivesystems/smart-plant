@@ -2,7 +2,7 @@ var admin = require('firebase-admin');
 var SerialPort = require('serialport');
 var express = require('express');
 var request = require('request');
-var wood_db = require('./wood_db_scraper.js');
+var wood_db = require('./lib/wood_db_scraper.js');
 var serviceAccount = require('./smart-plant-75235-firebase-adminsdk-pcxba-1c74fefac1.json');
 var app = express();
 const Telegraf = require('telegraf')
@@ -11,7 +11,7 @@ const Markup = require('telegraf/markup')
 var bot;
 var fs = require('fs');
 var path = require('path');
-const commandParts = require('./telegraf-command-parts/index.js');
+const commandParts = require('./lib/telegraf_command_parts.js');
 
 
 var readStream = fs.createReadStream(path.join(__dirname) + '/telegram_bot_token.txt', 'utf8');
@@ -55,6 +55,7 @@ const parser = new parsers.Readline({
 
 SerialPort.list((err, ports) => {
     // trovo la porta con stm attaccato
+    console.log(ports)
     for (var i = 0; i < ports.length; i++) {
         if (ports[i].manufacturer === "STMicroelectronics") {
             port = new SerialPort(ports[i].comName, {
@@ -63,6 +64,7 @@ SerialPort.list((err, ports) => {
             break;
         }
     }
+
     // Open errors will be emitted as an error event
     port.on('error', function(err) {
         console.log('Error: ', err.message);

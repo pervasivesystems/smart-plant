@@ -28,6 +28,7 @@ This is the units used for each information
 {
     "plants":[{
             "plantID": int,
+            "plant": string,
             "info":[{
                     "date": int,
                     "temperature": int,
