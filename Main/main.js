@@ -6,6 +6,8 @@ var wood_db = require('./wood_db_scraper.js');
 var serviceAccount = require('./smart-plant-75235-firebase-adminsdk-pcxba-1c74fefac1.json');
 var app = express();
 const Telegraf = require('telegraf')
+const Extra = require('telegraf/extra')
+const Markup = require('telegraf/markup')
 var bot;
 var fs = require('fs');
 var path = require('path');
@@ -94,10 +96,45 @@ SerialPort.list((err, ports) => {
             saveInfo(0, elem.status);
         });
 
+        bot.command('onetime', ({ reply }) =>
+          reply('One time keyboard', Markup
+            .keyboard(['/simple', '/inline', '/pyramid'])
+            .oneTime()
+            .resize()
+            .extra()
+          )
+        )
+
+        bot.command('key', ({ reply }) => {
+          return reply('Custom buttons keyboard', Markup
+            .keyboard([
+              ['/water', '/status'],
+              ['/startsensor', '/info'],
+              ['/setplant', '/help'],
+              ['hide buttons']
+            ])
+            // .oneTime()
+            .resize()
+            .extra()
+          )
+        })
+
+        bot.hears('hide buttons', ctx => {
+             ctx.reply('Hide keyboard', Markup.removeKeyboard(true).extra())
+         })
+
 
         bot.start((ctx) => {
             chatId=ctx.chat.id;
-            ctx.reply('Welcome! This is Smart Plant.')
+            ctx.reply('Welcome! This is Smart Plant.', Markup
+                .keyboard([
+                  ['/water', '/status'],
+                  ['/startsensor', '/info'],
+                  ['/setplant', '/help'],
+                  ['hide buttons']
+                ])
+                .resize()
+                .extra())
         })
 
         bot.command('/water', (ctx) => {
@@ -173,6 +210,7 @@ SerialPort.list((err, ports) => {
 
         bot.command('/help', (ctx) => {
             ctx.reply('Welcome! This is Smart Plant.\nUse the commands to interact.')
+            ctx.reply('use /key to use buttons')
         })
 
 
