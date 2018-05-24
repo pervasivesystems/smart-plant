@@ -3,9 +3,19 @@ var SerialPort = require('serialport');
 var express = require('express');
 var request = require('request');
 var wood_db = require('./wood_db_scraper.js');
-
 var serviceAccount = require('./smart-plant-75235-firebase-adminsdk-pcxba-1c74fefac1.json');
 var app = express();
+const Telegraf = require('telegraf')
+var bot;
+var fs = require('fs');
+var path = require('path');
+const commandParts = require('./telegraf-command-parts/index.js');
+
+
+var readStream = fs.createReadStream(path.join(__dirname) + '/telegram_bot_token.txt', 'utf8');
+let token = ''
+var chatId;
+
 
 // init firebase
 admin.initializeApp({
@@ -22,7 +32,7 @@ var elem = {
     "plantID": 0,
     "plant":"rose",
     "status": [{
-        "date": 0,
+        // "date": 0,
         "temperature": 0,
         "light": 0,
         "ph": 0
@@ -64,17 +74,98 @@ SerialPort.list((err, ports) => {
         elem.status.temperature = status[0];
         elem.status.light = status[1];
         elem.status.ph = status[2];
-        search(elem.plant, (err, result)=>{
+        wood_db.search(elem.plant, (err, result)=>{
             if(status[2]>result.soilph.max){
-
+                bot.telegram.sendMessage(chatId, "PH too Basic!")
             }
             if(status[2]<result.soilph.min){
-
+                bot.telegram.sendMessage(chatId, "PH too Acid!")
             }
+            // TODO: controllare gli altri parametri, se manca acqua annaffiare
 
         });
         saveInfo(0, elem.status);
     });
+
+    readStream.on('data', function(chunk) {
+        token += chunk;
+    }).on('end', function() {
+        // console.log(token.trim());
+        bot = new Telegraf(token.trim());
+        bot.use(commandParts());
+
+        bot.start((ctx) => {
+            chatId=ctx.chat.id;
+            ctx.reply('Welcome! This is Smart Plant.')
+        })
+
+        bot.command('/water', (ctx) => {
+            console.log(ctx.state.command);
+            port.write("1", function(err) {
+                if (err) {
+                    ctx.reply('error')
+                    return console.log('Error on write: ', err.message);
+                }
+                console.log('message written');
+                ctx.reply('Ok, water')
+            });
+        })
+
+        bot.command('/status', (ctx) => {
+            retrivePlant(elem.plantID, (err, result)=>{
+                console.log(result);
+                var last = result[result.length-1];
+                var string = "Light: "+ last.light +"\n";
+                string += "PH: "+ last.ph +"\n";
+                string += "Temperature: "+ last.temperature +"\n";
+                ctx.reply(string)
+            });
+        })
+
+        bot.command('/startsensor', (ctx) => {
+            port.write("3", function(err) { //
+                if (err) {
+                    ctx.reply('error')
+                    return console.log('Error on write: ', err.message);
+                }
+                console.log('message written');
+                ctx.reply('Ok, I started the sensors')
+            });
+
+        })
+
+        bot.command('/info', (ctx) => {
+            wood_db.search(elem.plant,(err, result)=>{
+                if(err) ctx.reply('error');
+                else{
+                    // TODO: formattare bene in una stringa
+                    ctx.reply(JSON.stringify(result));
+                }
+            })
+        })
+
+        bot.command('/setplant', (ctx) => {
+            console.log(ctx.state);
+            if(ctx.state.command.args === '') {
+                ctx.reply("name of the plant or flower required \n/setplant plant_name");
+                return;
+            }
+            elem.plant=ctx.state.command.args;
+            setPlant(elem)
+            ctx.reply("You set the plant as a " + ctx.state.command.args);
+        });
+
+        bot.command('/help', (ctx) => {
+            ctx.reply('Welcome! This is Smart Plant.\nUse the commands to interact.')
+        })
+
+
+
+        bot.startPolling();
+
+        leggi();
+
+
 
     app.get("/", function(req, res) {
         console.log("/home");
@@ -115,7 +206,7 @@ SerialPort.list((err, ports) => {
     })
 
     app.get("/info", function(req, res) {
-        console.log("/status");
+        console.log("/info");
         wood_db.search(elem.plant,(err, result)=>{
             if(err) res.send(err);
             else    res.send(result);
@@ -128,24 +219,43 @@ SerialPort.list((err, ports) => {
         res.send("ok");
     })
 
-    console.log('Listening on 3000');
-    app.listen(3000);
-
+    // console.log('Listening on 3000');
+    // app.listen(3000);
+    })
 })
 
+
+function leggi(){
+    data = "1,2,3" // commentare quando ci sarà la scheda vera
+    console.log(data);
+    var status = data.split(',');
+    elem.status.temperature = status[0];
+    elem.status.light = status[1];
+    elem.status.ph = status[2];
+    wood_db.search(elem.plant, (err, result)=>{
+        if(status[2]>result.soilph.max){
+            bot.telegram.sendMessage(chatId, "PH too Basic!")
+        }
+        if(status[2]<result.soilph.min){
+            bot.telegram.sendMessage(chatId, "PH too Acid!")
+        }
+        // TODO: controllare gli altri parametri, se manca acqua annaffiare
+
+    });
+    saveInfo(0, elem.status);
+}
+
+
 // setPlant(elem);
+// retrivePlant(0,(err, res)=>{console.log(res);})
 
 // save data in firebase db
 function saveInfo(id, status) {
     plants.once("value", function(snapshot) {
         var json = snapshot.val();
-        for (var i = 0; i < json.length; i++) {
-            if(json[i].plantID == id){
-                json.push(status);
-                plants.set(json);
-                break;
-            }
-        }
+        var plant = json[elem.plantID];
+        plant.status.push(status);
+        setPlant(plant);
     }, function(errorObject) {
         console.log("The read failed: " + errorObject.code);
     });
@@ -159,15 +269,16 @@ function retrivePlant(id, callback){
             return;
         }
         var json = snapshot.val();
-        for (var i = 0; i < json.length; i++) {
-            if(json[i].plantID == id){
-                if (json[i].status === undefined)
-                callback(null, []);
-                else
-                callback(null, json[i].status);
-                return;
-            }
+        json = json[elem.plantID];
+        // console.log(snapshot.val());
+        if(json.plantID == id){
+            if (json.status === undefined)
+            callback(null, []);
+            else
+            callback(null, json.status);
+            return;
         }
+
         callback(null, []);
     }, function(errorObject) {
         console.log("The read failed: " + errorObject.code);
@@ -175,11 +286,10 @@ function retrivePlant(id, callback){
     });
 }
 
-// save the first plant in db
+// save the plant in db
 function setPlant(elem) {
     plants.once("value", function(snapshot) {
-        // elem.status=[];
-        plants.set(elem);
+        plants.set([elem]);
     }, function(errorObject) {
         console.log("The read failed: " + errorObject.code);
     });

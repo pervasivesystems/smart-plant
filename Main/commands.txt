@@ -1,0 +1,6 @@
+water - Water the plant
+status - Show the status of the plant
+startsensor - Start a measurement with the sensors
+info - Show some botanic information about your plant
+setplant - Set the type of plant to be managed
+help - h e l p !
