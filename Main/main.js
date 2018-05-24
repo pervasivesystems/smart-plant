@@ -17,6 +17,7 @@ const commandParts = require('./lib/telegraf_command_parts.js');
 var readStream = fs.createReadStream(path.join(__dirname) + '/telegram_bot_token.txt', 'utf8');
 let token = ''
 var chatId;
+var page;
 
 
 // init firebase
@@ -34,13 +35,13 @@ var elem = {
     "plantID": 0,
     "plant":"Rose",
     "status": [{
-        // "date": 0,
+        "date": "YYYY:MM:DD:HH:MM:SS",
         "temperature": 0,
         "light": 0,
         "ph": 0
     }]
 };
-
+var woody={};
 
 
 // Start the Main
@@ -55,7 +56,7 @@ const parser = new parsers.Readline({
 
 SerialPort.list((err, ports) => {
     // trovo la porta con stm attaccato
-    console.log(ports)
+    // console.log(ports)
     for (var i = 0; i < ports.length; i++) {
         if (ports[i].manufacturer === "STMicroelectronics") {
             port = new SerialPort(ports[i].comName, {
@@ -79,33 +80,20 @@ SerialPort.list((err, ports) => {
         bot = new Telegraf(token.trim());
         bot.use(commandParts());
 
-        parser.on('data', function(data){ //tmp,lgt,ph
-            data = "1,2,3" // commentare quando ci sarà la scheda vera
-            console.log(data);
-            var status = data.split(',');
-            elem.status.temperature = status[0];
-            elem.status.light = status[1];
-            elem.status.ph = status[2];
-            // wood_db.search(elem.plant, (err, result)=>{
-            if(status[2]>result.info.soilph.max){
-                bot.telegram.sendMessage(chatId, "PH too Basic!")
-            }
-            if(status[2]<result.info.soilph.min){
-                bot.telegram.sendMessage(chatId, "PH too Acid!")
-            }
-            // TODO: controllare gli altri parametri, se manca acqua annaffiare
+        parser.on('data', function(tlp){ //tmp,lgt,ph
+            tlp = "1,2,3" // commentare quando ci sarà la scheda vera
+            console.log(tlp);
+            var status = tlp.split(',');
+            var time = getDateTime();
+            elem.status[0].date=time;
+            elem.status[0].temperature = status[0];
+            elem.status[0].light = status[1];
+            elem.status[0].ph = status[2];
+            check(status[0]);
+            saveInfo(0, elem.status[0]);
 
-            saveInfo(0, elem.status);
         });
 
-        bot.command('onetime', ({ reply }) =>
-          reply('One time keyboard', Markup
-            .keyboard(['/simple', '/inline', '/pyramid'])
-            .oneTime()
-            .resize()
-            .extra()
-          )
-        )
 
         bot.command('key', ({ reply }) => {
           return reply('Custom buttons keyboard', Markup
@@ -123,7 +111,16 @@ SerialPort.list((err, ports) => {
 
         bot.hears('hide buttons', ctx => {
              ctx.reply('Hide keyboard', Markup.removeKeyboard(true).extra())
-         })
+        })
+        bot.hears('l', ctx => {
+             leggi()
+        })
+        bot.hears('s', ctx => {
+             chatId=ctx.chat.id
+             wood_db.search(elem.plant, (err, result)=>{
+                 woody=result;
+             })
+        })
 
 
         bot.start((ctx) => {
@@ -153,14 +150,71 @@ SerialPort.list((err, ports) => {
 
         bot.command('/status', (ctx) => {
             retrivePlant(elem.plantID, (err, result)=>{
-                console.log(result);
-                var last = result[result.length-1];
-                var string = "Light: "+ last.light +"\n";
+                // console.log(result);
+                if(result.length==0){
+                    ctx.reply('no information');
+                    return;
+                }
+                page=result.length-1;
+                var last = result[page];
+                var data=last.date.split(':');  // YYYY:MM:DD:HH:MM:SS
+                var string = "This is the status on "+data[2]+"/" +data[1]+"/"+data[0] +" at " +data[3]+":"+data[4]+"\n";
+                string += "Light: "+ last.light +"\n";
                 string += "PH: "+ last.ph +"\n";
                 string += "Temperature: "+ last.temperature +"\n";
-                ctx.reply(string)
+                ctx.reply(string, Markup.inlineKeyboard([
+                  Markup.callbackButton('Previous', 'Previous'),
+                  Markup.callbackButton('Next', 'Next')
+              ]).extra())
+                check(last)
+            });
+
+        })
+        bot.action('Next', (ctx) => {
+            retrivePlant(elem.plantID, (err, result)=>{
+                // console.log(result);
+                // console.log(page);
+                if(page>=result.length-1){
+                    ctx.reply('no other information');
+                    return;
+                }
+                page = page + 1;
+                var last = result[page];
+                var data=last.date.split(':');  // YYYY:MM:DD:HH:MM:SS
+                var string = "This is the status on "+data[2]+"/" +data[1]+"/"+data[0] +" at " +data[3]+":"+data[4]+"\n";
+                string += "Light: "+ last.light +"\n";
+                string += "PH: "+ last.ph +"\n";
+                string += "Temperature: "+ last.temperature +"\n";
+                ctx.reply(string, Markup.inlineKeyboard([
+                  Markup.callbackButton('Previous', 'Previous '),
+                  Markup.callbackButton('Next', 'Next')
+              ]).extra())
+                check(last)
             });
         })
+        bot.action('Previous', (ctx) => {
+            retrivePlant(elem.plantID, (err, result)=>{
+                // console.log(result);
+                console.log(page);
+                if(page<=0){
+                    ctx.reply('no other information');
+                    return;
+                }
+                page = page - 1;
+                var last = result[page];
+                var data=last.date.split(':');  // YYYY:MM:DD:HH:MM:SS
+                var string = "This is the status on "+data[2]+"/" +data[1]+"/"+data[0] +" at " +data[3]+":"+data[4]+"\n";
+                string += "Light: "+ last.light +"\n";
+                string += "PH: "+ last.ph +"\n";
+                string += "Temperature: "+ last.temperature +"\n";
+                ctx.reply(string, Markup.inlineKeyboard([
+                  Markup.callbackButton('Previous', 'Previous'),
+                  Markup.callbackButton('Next', 'Next')
+              ]).extra())
+                check(last)
+            });
+        })
+
 
         bot.command('/startsensor', (ctx) => {
             port.write("3", function(err) { //
@@ -175,28 +229,18 @@ SerialPort.list((err, ports) => {
         })
 
         bot.command('/info', (ctx) => {
-            wood_db.search(elem.plant,(err, result)=>{
-                if(err) ctx.reply('error');
-                else{
-                    // TODO: formattare bene in una stringa
-                    var string ="";
-                    string += "*"+elem.plant+"*\n";
-                    var url ="http://www.rosai-e-piante-meilland.it/media/catalog/product/cache/3/image/800x800/040ec09b1e35df139433887a97daa66f/1/0/1060-2946-rosier_edith_piaf_meiramboys-mi-t1000.jpg";
-                    // url = result.img+"";
-                    // url=url.trim();
-                    // console.log(result.img);
-                    bot.telegram.sendPhoto(ctx.chat.id, url, {caption:string, parse_mode:"Markdown"})
+            var string ="";
+            string += "*"+elem.plant+"*\n";
+            var url ="http://www.rosai-e-piante-meilland.it/media/catalog/product/cache/3/image/800x800/040ec09b1e35df139433887a97daa66f/1/0/1060-2946-rosier_edith_piaf_meiramboys-mi-t1000.jpg";
+            // url = woody.img+"";
+            // url=url.trim();
+            // console.log(woody.img);
+            bot.telegram.sendPhoto(ctx.chat.id, url, {caption:string, parse_mode:"Markdown"})
 
-                    string  = "\n*Light*: "+result.info.light.description;
-                    string += "\n*Water*: "+result.info.water.description;
-                    string += "\n*Soil PH*: "+result.info.soilph.description;
-                    bot.telegram.sendMessage(ctx.chat.id, string, {parse_mode:"Markdown"})
-                    // string += "![alt tag]("+ result.img + ")"
-                    // telegram.sendMediaGroup(chatId, media, [extra]) => Promise
-
-                    // ctx.reply(JSON.stringify(result));
-                }
-            })
+            string  = "\n*Light*: "+woody.info.light.description;
+            string += "\n*Water*: "+woody.info.water.description;
+            string += "\n*Soil PH*: "+woody.info.soilph.description;
+            bot.telegram.sendMessage(ctx.chat.id, string, {parse_mode:"Markdown"})
         })
 
         bot.command('/setplant', (ctx) => {
@@ -206,8 +250,11 @@ SerialPort.list((err, ports) => {
                 return;
             }
             elem.plant=ctx.state.command.args;
-            setPlant(elem)
             ctx.reply("You set the plant as a " + ctx.state.command.args);
+            setPlant(elem)
+            wood_db.search(elem.plant, (err, result)=>{
+                woody=result;
+            })
         });
 
         bot.command('/help', (ctx) => {
@@ -216,65 +263,9 @@ SerialPort.list((err, ports) => {
         })
 
 
-
         bot.startPolling();
 
 
-
-        app.get("/", function(req, res) {
-            console.log("/home");
-            res.send("ok");
-        })
-
-        app.get("/water", function(req, res) {
-            console.log("/water");
-            // water command
-            port.write("1", function(err) { //
-                if (err) {
-                    res.send('err');
-                    return console.log('Error on write: ', err.message);
-                }
-                console.log('message written');
-                res.send("ok");
-            });
-        })
-
-        app.get("/status", function(req, res) {
-            console.log("/status");
-            retrivePlant(elem.plantID, (err, result)=>{
-                res.json(result);
-            });
-        })
-
-        app.get("/start_sensor", function(req, res) {
-            console.log("/start_sensor");
-            // water command
-            port.write("3", function(err) { //
-                if (err) {
-                    res.send('err');
-                    return console.log('Error on write: ', err.message);
-                }
-                console.log('message written');
-                res.send("ok");
-            });
-        })
-
-        app.get("/info", function(req, res) {
-            console.log("/info");
-            wood_db.search(elem.plant,(err, result)=>{
-                if(err) res.send(err);
-                else    res.send(result);
-            })
-        })
-
-        app.get("/setPlant/:name", function(req, res) {
-            console.log("/setPlant");
-            elem.name=req.params.name;
-            res.send("ok");
-        })
-
-        // console.log('Listening on 3000');
-        // app.listen(3000);
     })
 })
 
@@ -282,8 +273,47 @@ SerialPort.list((err, ports) => {
 // setPlant(elem);
 // retrivePlant(0,(err, res)=>{console.log(res);})
 
+
+
+function leggi(){
+    var x1 = "1,2,3" // commentare quando ci sarà la scheda vera
+    console.log(x1);
+    var status = x1.split(',');
+    var time = getDateTime();
+    elem.status[0].date=time;
+    elem.status[0].temperature = status[0];
+    elem.status[0].light = status[1];
+    elem.status[0].ph = status[2];
+
+        if(status[2]>woody.info.soilph.max){
+            bot.telegram.sendMessage(chatId, "PH too Basic!")
+        }
+        if(status[2]<woody.info.soilph.min){
+            bot.telegram.sendMessage(chatId, "PH too Acid!")
+        }
+        // TODO: controllare gli altri parametri, se manca acqua annaffiare
+        // console.log(elem.status);
+        saveInfo(0, elem.status[0]);
+
+}
+
+function check(status){
+    console.log(woody);
+    console.log(status);
+    if(status.ph>woody.info.soilph.max){
+        bot.telegram.sendMessage(chatId, "PH too Basic!")
+    }
+    if(status.ph<woody.info.soilph.min){
+        bot.telegram.sendMessage(chatId, "PH too Acid!")
+    }
+    // TODO: controllare gli altri parametri, se manca acqua annaffiare
+    // console.log(elem.status);
+}
+
+
 // save data in firebase db
 function saveInfo(id, status) {
+    console.log(status);
     plants.once("value", function(snapshot) {
         var json = snapshot.val();
         var plant = json[elem.plantID];
@@ -326,6 +356,32 @@ function setPlant(elem) {
     }, function(errorObject) {
         console.log("The read failed: " + errorObject.code);
     });
+}
+
+//YYYY:MM:DD:HH:MM:SS
+function getDateTime() {
+
+    var date = new Date();
+
+    var hour = date.getHours();
+    hour = (hour < 10 ? "0" : "") + hour;
+
+    var min  = date.getMinutes();
+    min = (min < 10 ? "0" : "") + min;
+
+    var sec  = date.getSeconds();
+    sec = (sec < 10 ? "0" : "") + sec;
+
+    var year = date.getFullYear();
+
+    var month = date.getMonth() + 1;
+    month = (month < 10 ? "0" : "") + month;
+
+    var day  = date.getDate();
+    day = (day < 10 ? "0" : "") + day;
+
+    return year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec;
+
 }
 
 // NOT used
