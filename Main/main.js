@@ -30,7 +30,7 @@ var port;
 var id = 0;
 var elem = {
     "plantID": 0,
-    "plant":"rose",
+    "plant":"Rose",
     "status": [{
         // "date": 0,
         "temperature": 0,
@@ -140,15 +140,20 @@ SerialPort.list((err, ports) => {
                 if(err) ctx.reply('error');
                 else{
                     // TODO: formattare bene in una stringa
-                    var string = "*"+elem.plant+"*\n";
-                    string += "Light: "+result.info.light.description;
-                    string += "Water: "+result.info.water.description;
-                    string += "Soil PH: "+result.info.soilph.description;
-                    console.log(result.img);
-                    // string += "![alt tag]("+ result.img + ")"
+                    var string ="";
+                    string += "*"+elem.plant+"*\n";
+                    var url ="http://www.rosai-e-piante-meilland.it/media/catalog/product/cache/3/image/800x800/040ec09b1e35df139433887a97daa66f/1/0/1060-2946-rosier_edith_piaf_meiramboys-mi-t1000.jpg";
+                    // url = result.img+"";
+                    // url=url.trim();
+                    // console.log(result.img);
+                    bot.telegram.sendPhoto(ctx.chat.id, url, {caption:string, parse_mode:"Markdown"})
 
-                    // bot.telegram.sendMessage(ctx.chat.id, string, {parse_mode:"Markdown"})
-                    bot.telegram.sendPhoto(ctx.chat.id, result.img)
+                    string  = "\n*Light*: "+result.info.light.description;
+                    string += "\n*Water*: "+result.info.water.description;
+                    string += "\n*Soil PH*: "+result.info.soilph.description;
+                    bot.telegram.sendMessage(ctx.chat.id, string, {parse_mode:"Markdown"})
+                    // string += "![alt tag]("+ result.img + ")"
+                    // telegram.sendMediaGroup(chatId, media, [extra]) => Promise
 
                     // ctx.reply(JSON.stringify(result));
                 }
