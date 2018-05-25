@@ -3,6 +3,7 @@ var request = require('request');
 
 
 function commonSearch(commonname, callback) {
+    commonname=commonname.trim().replace(" ","+");
     var woodsearch = "http://woodyplants.cals.cornell.edu/plant/index?PlantSearch%5BbotanicalName%5D=&PlantSearch%5BcommonName%5D=" + commonname + "&PlantSearch%5Bsize%5D=&PlantSearch%5Bleaves%5D=&PlantSearch%5Bleaves%5D=&PlantSearch%5Blight%5D=&PlantSearch%5BhardyToZone%5D=0&PlantSearch%5BsoilPh%5D=&PlantSearch%5BsoilPh%5D=&PlantSearch%5BsaltTolerance%5D=&PlantSearch%5BcuStructuralSoil%5D=&PlantSearch%5BmoistureCategory%5D=&PlantSearch%5BbareRootTransplanting%5D=&PlantSearch%5BbareRootTransplanting%5D=&PlantSearch%5Bcollection%5D=";
     request(woodsearch, function(error, response, body) {
         if(error){
@@ -31,7 +32,7 @@ function commonSearch(commonname, callback) {
 }
 
 function botanicSearch(botanicname, callback) {
-    botanicname=botanicname.replace(" ","+");
+    botanicname=botanicname.trim().replace(" ","+");
     var woodsearch = "http://woodyplants.cals.cornell.edu/plant/index?PlantSearch%5BbotanicalName%5D="+botanicname+"&PlantSearch%5BcommonName%5D=&PlantSearch%5Bsize%5D=&PlantSearch%5Bleaves%5D=&PlantSearch%5Bleaves%5D=&PlantSearch%5Blight%5D=&PlantSearch%5BhardyToZone%5D=0&PlantSearch%5BsoilPh%5D=&PlantSearch%5BsoilPh%5D=&PlantSearch%5BsaltTolerance%5D=&PlantSearch%5BcuStructuralSoil%5D=&PlantSearch%5BmoistureCategory%5D=&PlantSearch%5BbareRootTransplanting%5D=&PlantSearch%5BbareRootTransplanting%5D=&PlantSearch%5Bcollection%5D=";
     // console.log(woodsearch);
     request(woodsearch, function(error, response, body) {
@@ -120,6 +121,10 @@ function findInfo(plant, callback) {
 
 function search(commonname, callback){
     commonSearch(commonname, (err, result)=>{
+        if(result.length===0){
+            callback(err,[])
+            return;
+        }
         findInfo(result[0].link, (err,res)=>{
             var json = result[0];
             json.info=res;
@@ -132,6 +137,10 @@ function search(commonname, callback){
 function searchB(name, callback){
     botanicSearch(name.trim(), (err, result)=>{
         // console.log(result);
+        if(result.length===0){
+            callback(err,[])
+            return;
+        }
         findInfo(result[0].link, (err,res)=>{
             var json = result[0];
             json.info=res;

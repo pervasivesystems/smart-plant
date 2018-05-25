@@ -338,7 +338,7 @@ SerialPort.list((err, ports) => {
                     return;
                 }
                 var url = images[0].url;
-                console.log(url);
+                // console.log(url);
                 // const download = require('image-downloader')
                 // const options = {
                 //     url: url,
@@ -347,15 +347,15 @@ SerialPort.list((err, ports) => {
                 // download.image(options)
                 //     .then(({filename,image}) => {
 
-                        // ctx.replyWithPhoto({ source: fs.createReadStream('./img.jpg')});
-                        // bot.telegram.sendPhoto(ctx.chat.id,  {source: fs.readFileSync("./img.jpg")},{caption:string, parse_mode:"Markdown"})
-                        bot.telegram.sendPhoto(ctx.chat.id,url,{caption:string, parse_mode:"Markdown"})
-                        // console.log(url);
+                // ctx.replyWithPhoto({ source: fs.createReadStream('./img.jpg')});
+                // bot.telegram.sendPhoto(ctx.chat.id,  {source: fs.readFileSync("./img.jpg")},{caption:string, parse_mode:"Markdown"})
+                bot.telegram.sendPhoto(ctx.chat.id,url,{caption:string, parse_mode:"Markdown"})
+                // console.log(url);
 
-                        string  = "\n*Light*: "+woody.info.light.description;
-                        string += "\n*Water*: "+woody.info.water.description;
-                        string += "\n*Soil PH*: "+woody.info.soilph.description;
-                        bot.telegram.sendMessage(ctx.chat.id, string, {parse_mode:"Markdown"})
+                string  = "\n*Light*: "+woody.info.light.description;
+                string += "\n*Water*: "+woody.info.water.description;
+                string += "\n*Soil PH*: "+woody.info.soilph.description;
+                bot.telegram.sendMessage(ctx.chat.id, string, {parse_mode:"Markdown"})
 
                 // }).catch((err) => {
                 //     console.log("erro download"+ err);
@@ -371,10 +371,17 @@ SerialPort.list((err, ports) => {
             wood_db.commonSearch(ctx.state.command.args, (err, result)=>{
                 var string = "";
                 for (var i = 0; i < result.length; i++) {
+                    console.log(result[i]);
                     string = result[i].botanical+"\n";
-                    ctx.reply(string, Markup.inlineKeyboard([
-                        Markup.callbackButton('Set', 'Set '+string),
-                    ]).extra());
+                    if(result.link===undefined){
+                        ctx.reply("no plant found");
+                        break;
+                    }
+                    else{
+                        ctx.reply(string, Markup.inlineKeyboard([
+                            Markup.callbackButton('Set', 'Set '+string),
+                        ]).extra());
+                    }
                 }
             })
         });
