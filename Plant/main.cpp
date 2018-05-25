@@ -6,11 +6,11 @@
  #include "main.h"
 
 DigitalOut myled(LED1);
-BufferedSerial *ser;
+Serial *ser;
 
 int main() {
     SystemClock_Config();
-    ser = new BufferedSerial(USBTX, USBRX);
+    ser = new Serial(USBTX, USBRX);
     ser->baud(115200*2);
     ser->format(8);
     ser->printf("Hello This is Plant\n\r");

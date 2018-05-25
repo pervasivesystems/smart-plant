@@ -4,16 +4,30 @@
  * Licensed under the Apache License, Version 2.0);
  */
  #include "main.h"
-
 DigitalOut myled(LED1);
-BufferedSerial *ser;
+Serial *ser;
+volatile char c = '\0'; // Initialized to the NULL character
+
+void onCharReceived()
+{
+    c = ser->getc();
+    if (c == '1' || c == '3')
+    {
+        action = true;
+        act = c;
+    }
+}
 
 int main() {
     SystemClock_Config();
-    ser = new BufferedSerial(USBTX, USBRX);
+    ser = new  Serial(USBTX, USBRX);
     ser->baud(115200*2);
     ser->format(8);
-    ser->printf("Hello This is Server\n\r");
+    
+    printf("Hello This is Server\n\r");
+    
+    ser->attach(&onCharReceived);
+    
     myled = 1;
     
     ServerLora();

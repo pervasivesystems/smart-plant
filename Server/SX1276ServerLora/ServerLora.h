@@ -23,6 +23,8 @@ Maintainer: Miguel Luis and Gregory Cristian
 #ifndef __SX1276PINGPONG_H__
 #define __SX1276PINGPONG_H__
 
+extern bool action;
+extern char act;
 #ifdef FEATURE_LORA
 void ServerLora(void);
 #else

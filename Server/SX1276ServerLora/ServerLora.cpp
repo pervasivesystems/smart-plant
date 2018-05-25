@@ -87,7 +87,10 @@ SX1276Generic *Radio;
 
 uint16_t BufferSize = BUFFER_SIZE;
 uint8_t *Buffer;
-const uint8_t water[] = { 'W', 'A', 'T', 'E', 'R', ':', 'N', 'O'};// "PING";
+const uint8_t water[] = { '1', '1', '1', '1', '1', '1', '1', '1'};// "SEND WATER MESSAGE";
+const uint8_t sensor[] = { '3', '3', '3', '3', '3', '3', '3', '3'};// "SEND SENSOR MESSAGE";
+extern bool action = false;
+extern char act = '\0';
 
 
 DigitalOut *led3;
@@ -206,17 +209,16 @@ void ServerLora(void)
 #endif
 
     if (DEBUG_MESSAGE)
-        dprintf("Sending the message ... ");
+        dprintf("Server Ready to Send Commands");
 
 
-    State = TX;
+    State = RX;
     //Radio->Rx( RX_TIMEOUT_VALUE );
 #ifdef TARGET_STM32L4
     //     WatchDogUpdate();
 #endif
 
     while (1){
-        wait(1);
         switch( State )
         {
         case RX:
@@ -228,11 +230,27 @@ void ServerLora(void)
             break;
         case TX:
             *led3 = 1;
-            memcpy(Buffer, water, sizeof(water));
-            // We fill the buffer with numbers for the payload
-            for( i = sizeof(water); i < BufferSize; i++ )
-            {
-                Buffer[i] = i - sizeof(water);
+            switch (act) {
+                //caso di water 
+                case '1':
+                    memcpy(Buffer, water, sizeof(water));
+                    // We fill the buffer with numbers for the payload
+                    for( i = sizeof(water); i < BufferSize; i++ )
+                    {
+                        Buffer[i] = i - sizeof(water);
+                    }
+                    dprintf("Sending Water");
+                    break;
+                //case dei sensori
+                case '3':
+                    memcpy(Buffer, sensor, sizeof(sensor));
+                    // We fill the buffer with numbers for the payload
+                    for( i = sizeof(sensor); i < BufferSize; i++ )
+                    {
+                        Buffer[i] = i - sizeof(sensor);
+                    }
+                    dprintf("Sending Sensor request");
+                    break;
             }
             wait_ms( 10 );
             Radio->Send( Buffer, BufferSize );
@@ -276,15 +294,15 @@ void OnRxDone(void *radio, void *userThisPtr, void *userData, uint8_t *payload, 
         dprintf("> OnRxDone: RssiValue=%d dBm, SnrValue=%d", rssi, snr);
     char res[8];
     memcpy(res, payload, 8);
-    dprintf("MESSAGE FROM SEVER = %s", res);
-    State = TX;
+    dprintf("SENSORS = %s", res);
+    State = RX;
 }
 
 void OnTxTimeout(void *radio, void *userThisPtr, void *userData)
 {
     *led3 = 0;
     Radio->Sleep( );
-    State = TX_TIMEOUT;
+    State = TX;
     if(DEBUG_MESSAGE)
         dprintf("> OnTxTimeout");
 }
@@ -293,7 +311,16 @@ void OnRxTimeout(void *radio, void *userThisPtr, void *userData)
 {
     *led3 = 0;
     Radio->Sleep( );
-    State = TX;
+    
+    //controllo che se ricevuto 1 o 3 dal seriale setto a TX invece
+    if (action)
+    {
+        action = false;
+        State = TX;
+    }else{
+        State = RX;
+    }
+        
     if (DEBUG_MESSAGE)
         dprintf("> OnRxTimeout");
 }
@@ -301,7 +328,7 @@ void OnRxTimeout(void *radio, void *userThisPtr, void *userData)
 void OnRxError(void *radio, void *userThisPtr, void *userData)
 {
     Radio->Sleep( );
-    State = TX;
+    State = RX;
     if (DEBUG_MESSAGE)
         dprintf("> OnRxError");
 }

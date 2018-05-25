@@ -50,7 +50,7 @@
     #error "Please define a modem in the compiler options."
 #endif
 
-#define RX_TIMEOUT_VALUE    3500    // in ms
+#define RX_TIMEOUT_VALUE    10000    // in ms
 
 //#define BUFFER_SIZE       32        // Define the payload size here
 #define BUFFER_SIZE         64        // Define the payload size here
@@ -105,6 +105,19 @@ void print_stuff(){
 #endif
 }
 
+
+const uint8_t water[] = { 'F', 'A', 'T', 'T', 'O', '!', '!', '!'};// "SEND WATER MESSAGE";
+const uint8_t initial[] = { '!', 'E', 'R', 'R', 'o', 'R', 'E', '!'};// "SEND WATER MESSAGE";
+void setWaterMessage(){
+    uint8_t i;
+    memcpy(Buffer, water, sizeof(water));
+    // We fill the buffer with numbers for the payload
+    for( i = sizeof(water); i < BufferSize; i++ )
+    {
+        Buffer[i] = i - sizeof(water);
+    }
+}
+
 void setSensorMessage(){
     float light;
     light = analog_value.read() *10; // Read the analog input value (value from 0.0 to 1.0 = full ADC conversion range)
@@ -117,6 +130,17 @@ void setSensorMessage(){
     for( i = sizeof((uint8_t*)message); i < BufferSize; i++ )
     {
         Buffer[i] = i - sizeof((uint8_t*)message);
+    }
+}
+
+void setInitialMessage(){
+        
+    uint8_t i;
+    memcpy(Buffer, initial, sizeof(initial));
+    // We fill the buffer with numbers for the payload
+    for( i = sizeof(initial); i < BufferSize; i++ )
+    {
+        Buffer[i] = i - sizeof(initial);
     }
 }
 
@@ -222,31 +246,27 @@ void PlantLora(void)
 #endif
 
     if (DEBUG_MESSAGE)
-        dprintf("Waiting the message ... ");
+        dprintf("Plant Ready to Receive Orders");
 
-
-    Radio->Rx( RX_TIMEOUT_VALUE ); //CHIAMERà il timeout rx da cui poi chiamo DO_TX case.
+    State = RX;
+    //Radio->Rx( RX_TIMEOUT_VALUE ); //CHIAMERà il timeout rx da cui poi chiamo DO_TX case.
 
 #ifdef TARGET_STM32L4
     //     WatchDogUpdate();
 #endif
 
     while (1){
-        wait(1);
         switch( State )
         {
         case TX:
             *led3 = 1;
-
-            setSensorMessage();
-            wait_ms( 10 );
             wait(1);
+            wait_ms( 10 );
             Radio->Send( Buffer, BufferSize );
             State = LOWPOWER;
             break;
         case RX:
             *led3 = 0;
-            dprintf("> Received!");
             State = LOWPOWER;
             Radio->Rx( RX_TIMEOUT_VALUE );
             break;
@@ -267,6 +287,7 @@ void PlantLora(void)
 void OnTxDone(void *radio, void *userThisPtr, void *userData)
 {
     Radio->Sleep( );
+    setInitialMessage();
     State = RX;
     if (DEBUG_MESSAGE)
         dprintf("> OnTxDone");
@@ -282,7 +303,21 @@ void OnRxDone(void *radio, void *userThisPtr, void *userData, uint8_t *payload, 
         dprintf("> OnRxDone: RssiValue=%d dBm, SnrValue=%d", rssi, snr);
     char res[8];
     memcpy(res, payload, 8);
-    dprintf("MESSAGE = %s", res);
+    dprintf("ORDER RECEIVED: %s", res);
+    switch (res[0])
+    {
+        //ricevo 1 quindi devo annaffiare
+        case '1':
+            //funzione che aziona il server
+            setWaterMessage();
+            break;
+        //ricevo 3 quindi devo mandare indietro i
+        case '3':
+            setSensorMessage();
+            break;
+        default:
+            break;
+    }
     State = TX;
 }
 
