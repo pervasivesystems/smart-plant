@@ -31,7 +31,9 @@ function commonSearch(commonname, callback) {
 }
 
 function botanicSearch(botanicname, callback) {
+    botanicname=botanicname.replace(" ","+");
     var woodsearch = "http://woodyplants.cals.cornell.edu/plant/index?PlantSearch%5BbotanicalName%5D="+botanicname+"&PlantSearch%5BcommonName%5D=&PlantSearch%5Bsize%5D=&PlantSearch%5Bleaves%5D=&PlantSearch%5Bleaves%5D=&PlantSearch%5Blight%5D=&PlantSearch%5BhardyToZone%5D=0&PlantSearch%5BsoilPh%5D=&PlantSearch%5BsoilPh%5D=&PlantSearch%5BsaltTolerance%5D=&PlantSearch%5BcuStructuralSoil%5D=&PlantSearch%5BmoistureCategory%5D=&PlantSearch%5BbareRootTransplanting%5D=&PlantSearch%5BbareRootTransplanting%5D=&PlantSearch%5Bcollection%5D=";
+    // console.log(woodsearch);
     request(woodsearch, function(error, response, body) {
         if(error){
             callback(error,null);
@@ -43,6 +45,7 @@ function botanicSearch(botanicname, callback) {
         for (var i = 0; i < elements.length; i++) {
             var elem = elements.eq(i);
             var img = elem.children().eq(0).children().eq(0).attr("src");
+            // img=img.replace("thumb","large");
             var link = elem.children().eq(1).children().eq(0).attr("href");
             var botanical = elem.children().eq(1).text();
             var name = elem.children().eq(2).text();
@@ -127,7 +130,8 @@ function search(commonname, callback){
     });
 }
 function searchB(name, callback){
-    botanicSearch(name, (err, result)=>{
+    botanicSearch(name.trim(), (err, result)=>{
+        // console.log(result);
         findInfo(result[0].link, (err,res)=>{
             var json = result[0];
             json.info=res;
@@ -140,8 +144,9 @@ function searchB(name, callback){
 
 
 
-
-
+// searchB("Rosa rugosa", (err,res)=>{
+//     console.log(err,res);
+// })
 
 
 exports.commonSearch = commonSearch;

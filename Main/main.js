@@ -14,15 +14,15 @@ var path = require('path');
 const commandParts = require('./lib/telegraf_command_parts.js');
 const download = require('image-downloader')
 var quiche = require('quiche');
-
 var chart = quiche('line');
 
-
-
-var readStream = fs.createReadStream(path.join(__dirname) + '/telegram_bot_token.txt', 'utf8');
+// var readStream = fs.createReadStream(path.join(__dirname) + '/secret.txt', 'utf8');
 let token = ''
+let CSE_ID = ''
+let API_KEY = ''
 var chatId;
 var page;
+var ok=false;
 
 
 // init firebase
@@ -51,6 +51,17 @@ var woody={};
 
 // Start the Main
 console.log("Start Main");
+var lineReader = require('readline').createInterface({
+    input: require('fs').createReadStream('secret.txt')
+});
+lineReader.on('line', function (line) {
+    // console.log('Line from file:', line);
+    var l = line.split(" ");
+    if(l[0]==="telegram") token = l[1].trim()
+    if(l[0]==="googleID") CSE_ID = l[1].trim()
+    if(l[0]==="googleAPI") API_KEY = l[1].trim()
+    // console.log(token);
+})
 const parsers = SerialPort.parsers;
 
 // Use a `\r\n` as a line terminator
@@ -76,27 +87,29 @@ SerialPort.list((err, ports) => {
         console.log('Error: ', err.message);
     })
     port.pipe(parser);
-
-
-    readStream.on('data', function(chunk) {
-        token += chunk;
-    }).on('end', function() {
         // console.log(token.trim());
-        bot = new Telegraf(token.trim());
+        bot = new Telegraf(token);
         bot.use(commandParts());
 
         parser.on('data', function(tlp){ //tmp,lgt,ph
             tlp = "1,2,3" // commentare quando ci sarà la scheda vera
             // console.log("data: "+tlp);
             if(woody.name === undefined){ return;}
-            var status = tlp.split(',');
-            var time = getDateTime();
-            elem.status[0].date=time;
-            elem.status[0].temperature = status[0];
-            elem.status[0].light = status[1];
-            elem.status[0].ph = status[2];
-            check(status[0]);
-            saveInfo(0, elem.status[0]);
+            if(tlp==="#FATTO!#"){
+                ok = true;
+                return;
+            }
+            else{
+                tlp=tlp.replace("#","");
+                var status = tlp.split(',');
+                var time = getDateTime();
+                elem.status[0].date=time;
+                elem.status[0].temperature = status[0];
+                elem.status[0].light = status[1];
+                elem.status[0].ph = status[2];
+                check(status[0]);
+                saveInfo(0, elem.status[0]);
+            }
 
         });
 
@@ -128,13 +141,12 @@ SerialPort.list((err, ports) => {
                 elem.botanical = result.botanical;
                 // leggi()
                 ctx.reply("You set the plant as a " + elem.botanical);
+                bot.hears('s', ctx => {
+                    chatId=ctx.chat.id
+                    leggi()
+                })
             })
         })
-
-        bot.hears('s', ctx => {
-            leggi()
-        })
-
 
         bot.start((ctx) => {
             console.log("start");
@@ -155,14 +167,18 @@ SerialPort.list((err, ports) => {
             if(woody.info===undefined){
                  ctx.reply("Set your plant/flower first!");
                  return;
-             }
+            }
+            ok = false;
             port.write("1", function(err) {
                 if (err) {
                     ctx.reply('error')
                     return console.log('Error on write: ', err.message);
                 }
                 console.log('message written');
-                ctx.reply('Ok, water')
+                if(ok)
+                    ctx.reply('Ok, water')
+                else
+                    ctx.reply('Retry')
             });
         })
 
@@ -181,17 +197,18 @@ SerialPort.list((err, ports) => {
                 var last = result[page];
                 var data=last.date.split(':');  // YYYY:MM:DD:HH:MM:SS
                 var string = "This is the status on "+data[2]+"/" +data[1]+"/"+data[0] +" at " +data[3]+":"+data[4]+"\n";
-                string += "Light: "+ last.light +"\n";
-                string += "PH: "+ last.ph +"\n";
-                string += "Temperature: "+ last.temperature +"\n";
-                ctx.reply(string, Markup.inlineKeyboard([
-                  Markup.callbackButton('Previous', 'Previous'),
-                  Markup.callbackButton('Graph', 'Graph'),
-                  Markup.callbackButton('Next', 'Next')
-              ]).extra())
+                string += "\n*Light*: "+ last.light +"\n";
+                string += "*PH*: "+ last.ph +"\n";
+                string += "*Temperature*: "+ last.temperature +"\n";
+                var extra = Markup.inlineKeyboard([
+                    Markup.callbackButton('< Previous', 'Previous'),
+                    Markup.callbackButton('Graph', 'Graph'),
+                    Markup.callbackButton('Next >', 'Next')]).extra();
+                var mark = {parse_mode:"Markdown"};
+                var j = Object.assign(mark,extra);
+                ctx.reply(string,j)
                 check(last)
             });
-
         })
         bot.action('Next', (ctx) => {
             retrivePlant(elem.plantID, (err, result)=>{
@@ -205,13 +222,16 @@ SerialPort.list((err, ports) => {
                 var last = result[page];
                 var data=last.date.split(':');  // YYYY:MM:DD:HH:MM:SS
                 var string = "This is the status on "+data[2]+"/" +data[1]+"/"+data[0] +" at " +data[3]+":"+data[4]+"\n";
-                string += "Light: "+ last.light +"\n";
-                string += "PH: "+ last.ph +"\n";
-                string += "Temperature: "+ last.temperature +"\n";
-                ctx.reply(string, Markup.inlineKeyboard([
-                  Markup.callbackButton('Previous', 'Previous '),
-                  Markup.callbackButton('Next', 'Next')
-              ]).extra())
+                string += "\n*Light*: "+ last.light +"\n";
+                string += "*PH*: "+ last.ph +"\n";
+                string += "*Temperature*: "+ last.temperature +"\n";
+                var extra = Markup.inlineKeyboard([
+                    Markup.callbackButton('< Previous', 'Previous'),
+                    Markup.callbackButton('Graph', 'Graph'),
+                    Markup.callbackButton('Next >', 'Next')]).extra();
+                var mark = {parse_mode:"Markdown"};
+                var j = Object.assign(mark,extra);
+                ctx.reply(string,j)
                 check(last)
             });
         })
@@ -225,13 +245,16 @@ SerialPort.list((err, ports) => {
                 var last = result[page];
                 var data=last.date.split(':');  // YYYY:MM:DD:HH:MM:SS
                 var string = "This is the status on "+data[2]+"/" +data[1]+"/"+data[0] +" at " +data[3]+":"+data[4]+"\n";
-                string += "Light: "+ last.light +"\n";
-                string += "PH: "+ last.ph +"\n";
-                string += "Temperature: "+ last.temperature +"\n";
-                ctx.reply(string, Markup.inlineKeyboard([
-                  Markup.callbackButton('Previous', 'Previous'),
-                  Markup.callbackButton('Next', 'Next')
-              ]).extra())
+                string += "\n*Light*: "+ last.light +"\n";
+                string += "*PH*: "+ last.ph +"\n";
+                string += "*Temperature*: "+ last.temperature +"\n";
+                var extra = Markup.inlineKeyboard([
+                    Markup.callbackButton('< Previous', 'Previous'),
+                    Markup.callbackButton('Graph', 'Graph'),
+                    Markup.callbackButton('Next >', 'Next')]).extra();
+                var mark = {parse_mode:"Markdown"};
+                var j = Object.assign(mark,extra);
+                ctx.reply(string,j)
                 check(last)
             });
         })
@@ -247,7 +270,7 @@ SerialPort.list((err, ports) => {
                 for (var i = 0; i < result.length; i++) {
                     var last = result[i];
                     var data=last.date.split(':');  // YYYY:MM:DD:HH:MM:SS
-                    var string = i+"";
+                    var string = i+" ";
                     date.push(string);
 
                     tmp.push(last.temperature)
@@ -259,10 +282,13 @@ SerialPort.list((err, ports) => {
                 chart.addData(light, 'Light', 'FF0000');
                 chart.addAxisLabels('x', date);
                 chart.setAutoScaling();
-                chart.setAxisRange('y', 0, 100, 10);
+                chart.setAxisRange('y', 0, 10, 1);
+                chart.setWidth(670); //670
+                chart.setHeight(446);
                 // chart.setTransparentBackground();
 
                 var imageUrl = chart.getUrl(true); // First param controls http vs. https
+
                 // bot.telegram.sendMessage(ctx.chat.id,imageUrl, {parse_mode:"Markdown"});
                 var s = "[graph]("+imageUrl+")"
                 bot.telegram.sendMessage(ctx.chat.id, s,{parse_mode:"Markdown"})
@@ -273,15 +299,19 @@ SerialPort.list((err, ports) => {
             if(woody.info===undefined){
                  ctx.reply("Set your plant/flower first!");
                  return;
-             }
-
+            }
+            ok=false
             port.write("3", function(err) { //
                 if (err) {
                     ctx.reply('error')
                     return console.log('Error on write: ', err.message);
                 }
                 console.log('message written');
-                ctx.reply('Ok, I started the sensors')
+                if(ok)
+                    ctx.reply('Ok, I started the sensors')
+                else
+                    ctx.reply('Retry')
+
             });
 
         })
@@ -292,30 +322,46 @@ SerialPort.list((err, ports) => {
                  return;
              }            var string ="";
             string += "*"+elem.plant+"* - "+ woody.botanical;
-            var url ="http://www.rosai-e-piante-meilland.it/media/catalog/product/cache/3/image/800x800/040ec09b1e35df139433887a97daa66f/1/0/1060-2946-rosier_edith_piaf_meiramboys-mi-t1000.jpg";
-            // url = woody.img+"";
-            // url=url.trim();
-            bot.telegram.sendPhoto(ctx.chat.id, url, {caption:string, parse_mode:"Markdown"})
+            const GoogleImages = require('google-images');
+            const client = new GoogleImages(CSE_ID, API_KEY);
+            client.search(woody.botanical)
+              .then(images => {
+                // console.log(images);
+                if(images.length===0){
+                    bot.telegram.sendMessage(ctx.chat.id,string,{parse_mode:"Markdown"})
+                    // console.log(url);
 
-            string  = "\n*Light*: "+woody.info.light.description;
-            string += "\n*Water*: "+woody.info.water.description;
-            string += "\n*Soil PH*: "+woody.info.soilph.description;
-            bot.telegram.sendMessage(ctx.chat.id, string, {parse_mode:"Markdown"})
+                    string  = "\n*Light*: "+woody.info.light.description;
+                    string += "\n*Water*: "+woody.info.water.description;
+                    string += "\n*Soil PH*: "+woody.info.soilph.description;
+                    bot.telegram.sendMessage(ctx.chat.id, string, {parse_mode:"Markdown"})
+                    return;
+                }
+                var url = images[0].url;
+                console.log(url);
+                // const download = require('image-downloader')
+                // const options = {
+                //     url: url,
+                //     dest: './image.jpg'
+                // }
+                // download.image(options)
+                //     .then(({filename,image}) => {
+
+                        // ctx.replyWithPhoto({ source: fs.createReadStream('./img.jpg')});
+                        // bot.telegram.sendPhoto(ctx.chat.id,  {source: fs.readFileSync("./img.jpg")},{caption:string, parse_mode:"Markdown"})
+                        bot.telegram.sendPhoto(ctx.chat.id,url,{caption:string, parse_mode:"Markdown"})
+                        // console.log(url);
+
+                        string  = "\n*Light*: "+woody.info.light.description;
+                        string += "\n*Water*: "+woody.info.water.description;
+                        string += "\n*Soil PH*: "+woody.info.soilph.description;
+                        bot.telegram.sendMessage(ctx.chat.id, string, {parse_mode:"Markdown"})
+
+                // }).catch((err) => {
+                //     console.log("erro download"+ err);
+                // })
+            });
         })
-
-        // bot.command('/setplant', (ctx) => {
-        //     console.log(ctx.state);
-        //     if(ctx.state.command.args === '') {
-        //         ctx.reply("name of the plant or flower required \n/setplant plant_name");
-        //         return;
-        //     }
-        //     elem.plant=ctx.state.command.args;
-        //     ctx.reply("You set the plant as a " + ctx.state.command.args);
-        //     setPlant(elem)
-        //     wood_db.search(elem.plant, (err, result)=>{
-        //         woody=result;
-        //     })
-        // });
 
         bot.command('/setplant', (ctx) => {
             if(ctx.state.command.args === '') {
@@ -333,9 +379,11 @@ SerialPort.list((err, ports) => {
             })
         });
         bot.action(/Set (.*)/, (ctx) => {
-            var b = ctx.update.callback_query.data.split(" ")[1];
+            var b = ctx.update.callback_query.data.slice(4);
+            console.log(b);
             wood_db.searchB(b, (err,result)=>{
                 if(result===undefined) return
+                console.log(result);
                 elem.plant = result.name;
                 elem.botanical = result.botanical;
                 setPlant(elem)
@@ -353,8 +401,6 @@ SerialPort.list((err, ports) => {
 
         bot.startPolling();
 
-
-    })
 })
 
 
@@ -388,10 +434,10 @@ function leggi(){
 function check(status){
     if(woody.info===undefined) return;
     if(status.ph>woody.info.soilph.max){
-        bot.telegram.sendMessage(chatId, "PH too Basic!")
+        bot.telegram.sendMessage(chatId, "⚠️ PH too Basic!")
     }
     if(status.ph<woody.info.soilph.min){
-        bot.telegram.sendMessage(chatId, "PH too Acid!")
+        bot.telegram.sendMessage(chatId, "⚠️ PH too Acid!")
     }
     // TODO: controllare gli altri parametri, se manca acqua annaffiare
     // console.log(elem.status);

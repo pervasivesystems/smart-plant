@@ -1,14 +1,28 @@
-var quiche = require('quiche');
+const GoogleImages = require('google-images');
 
- var chart = quiche('line');
- chart.setTitle('Something with lines');
- chart.addData([3000, 2900, 1500], 'Blah', '008000');
- chart.addData([1000, 1500, 2000], 'Asdf', '0000FF');
- chart.addAxisLabels('x', ['1800', '1900', '2000']);
- chart.setAutoScaling();
- chart.setAxisRange('y', 0, 100, 10);
- chart.setTransparentBackground();
+const client = new GoogleImages('010334306050835713802:vhrzz0upnmu', 'AIzaSyB__gDxtMyOgMBMSvls7MqvHcRpmNBt_U4');
 
- var imageUrl = chart.getUrl(true); // First param controls http vs. https
+client.search('camelia japonica')
+    .then(images => {
+        /*
+        [{
+            "url": "http://steveangello.com/boss.jpg",
+            "type": "image/jpeg",
+            "width": 1024,
+            "height": 768,
+            "size": 102451,
+            "thumbnail": {
+                "url": "http://steveangello.com/thumbnail.jpg",
+                "width": 512,
+                "height": 512
+            }
+        }]
+         */
+         console.log(images);
+    });
 
-console.log(imageUrl);
+// // paginate results
+// client.search('Steve Angello', {page: 2});
+//
+// // search for certain size
+// client.search('Steve Angello', {size: 'large'});
