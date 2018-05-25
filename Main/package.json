@@ -13,8 +13,13 @@
         "cheerio": "^1.0.0-rc.2",
         "express": "^4.16.3",
         "firebase-admin": "^5.12.1",
+        "image-downloader": "^3.3.0",
         "npm": "^6.1.0",
+        "quiche": "^0.3.0",
         "serialport": "^6.2.0",
         "telegraf": "^3.21.1"
+    },
+    "devDependencies": {
+        "google-charts": "^1.1.0"
     }
 }

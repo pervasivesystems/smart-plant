@@ -15,6 +15,7 @@ function commonSearch(commonname, callback) {
         for (var i = 0; i < elements.length; i++) {
             var elem = elements.eq(i);
             var img = elem.children().eq(0).children().eq(0).attr("src");
+            // img=img.replace("thumb","large");
             var link = elem.children().eq(1).children().eq(0).attr("href");
             var botanical = elem.children().eq(1).text();
             var name = elem.children().eq(2).text();
@@ -125,8 +126,26 @@ function search(commonname, callback){
         });
     });
 }
+function searchB(name, callback){
+    botanicSearch(name, (err, result)=>{
+        findInfo(result[0].link, (err,res)=>{
+            var json = result[0];
+            json.info=res;
+            json.img = "http://woodyplants.cals.cornell.edu" + json.img;
+            json.link = "http://woodyplants.cals.cornell.edu" + json.link;
+            callback(err, json);
+        });
+    });
+}
+
+
+
+
+
+
 
 exports.commonSearch = commonSearch;
 exports.botanicSearch = botanicSearch;
 exports.findInfo = findInfo;
 exports.search = search;
+exports.searchB = searchB;

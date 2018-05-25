@@ -12,6 +12,11 @@ var bot;
 var fs = require('fs');
 var path = require('path');
 const commandParts = require('./lib/telegraf_command_parts.js');
+const download = require('image-downloader')
+var quiche = require('quiche');
+
+var chart = quiche('line');
+
 
 
 var readStream = fs.createReadStream(path.join(__dirname) + '/telegram_bot_token.txt', 'utf8');
@@ -33,7 +38,7 @@ var port;
 var id = 0;
 var elem = {
     "plantID": 0,
-    "plant":"Rose",
+    "plant": undefined,
     "status": [{
         "date": "YYYY:MM:DD:HH:MM:SS",
         "temperature": 0,
@@ -82,7 +87,8 @@ SerialPort.list((err, ports) => {
 
         parser.on('data', function(tlp){ //tmp,lgt,ph
             tlp = "1,2,3" // commentare quando ci sarà la scheda vera
-            console.log(tlp);
+            // console.log("data: "+tlp);
+            if(woody.name === undefined){ return;}
             var status = tlp.split(',');
             var time = getDateTime();
             elem.status[0].date=time;
@@ -112,16 +118,26 @@ SerialPort.list((err, ports) => {
         bot.hears('hide buttons', ctx => {
              ctx.reply('Hide keyboard', Markup.removeKeyboard(true).extra())
         })
+
         bot.hears('l', ctx => {
+            console.log("l");
             chatId=ctx.chat.id
+            elem.plant="Rose";
             wood_db.search(elem.plant, (err, result)=>{
                 woody=result;
-                leggi()
+                elem.botanical = result.botanical;
+                // leggi()
+                ctx.reply("You set the plant as a " + elem.botanical);
             })
         })
-        
+
+        bot.hears('s', ctx => {
+            leggi()
+        })
+
 
         bot.start((ctx) => {
+            console.log("start");
             chatId=ctx.chat.id;
             ctx.reply('Welcome! This is Smart Plant.', Markup
                 .keyboard([
@@ -136,6 +152,10 @@ SerialPort.list((err, ports) => {
 
         bot.command('/water', (ctx) => {
             console.log(ctx.state.command);
+            if(woody.info===undefined){
+                 ctx.reply("Set your plant/flower first!");
+                 return;
+             }
             port.write("1", function(err) {
                 if (err) {
                     ctx.reply('error')
@@ -147,6 +167,10 @@ SerialPort.list((err, ports) => {
         })
 
         bot.command('/status', (ctx) => {
+            if(woody.info===undefined){
+                 ctx.reply("Set your plant/flower first!");
+                 return;
+             }
             retrivePlant(elem.plantID, (err, result)=>{
                 // console.log(result);
                 if(result.length==0){
@@ -162,6 +186,7 @@ SerialPort.list((err, ports) => {
                 string += "Temperature: "+ last.temperature +"\n";
                 ctx.reply(string, Markup.inlineKeyboard([
                   Markup.callbackButton('Previous', 'Previous'),
+                  Markup.callbackButton('Graph', 'Graph'),
                   Markup.callbackButton('Next', 'Next')
               ]).extra())
                 check(last)
@@ -192,8 +217,6 @@ SerialPort.list((err, ports) => {
         })
         bot.action('Previous', (ctx) => {
             retrivePlant(elem.plantID, (err, result)=>{
-                // console.log(result);
-                console.log(page);
                 if(page<=0){
                     ctx.reply('no other information');
                     return;
@@ -212,9 +235,46 @@ SerialPort.list((err, ports) => {
                 check(last)
             });
         })
+        bot.action('Graph', (ctx)=>{
+            retrivePlant(elem.plantID, (err, result)=>{
+                chart.setTitle('Status');
+                var tmp =[]
+                var ph =[]
+                var light =[]
+                var date =[]
+                var k =0;
+                // if(result.length>10)k=result.length-10;
+                for (var i = 0; i < result.length; i++) {
+                    var last = result[i];
+                    var data=last.date.split(':');  // YYYY:MM:DD:HH:MM:SS
+                    var string = i+"";
+                    date.push(string);
 
+                    tmp.push(last.temperature)
+                    ph.push(last.ph)
+                    light.push(last.light)
+                }
+                chart.addData(tmp, 'Temperature', '008000');
+                chart.addData(ph, 'PH', '0000FF');
+                chart.addData(light, 'Light', 'FF0000');
+                chart.addAxisLabels('x', date);
+                chart.setAutoScaling();
+                chart.setAxisRange('y', 0, 100, 10);
+                // chart.setTransparentBackground();
+
+                var imageUrl = chart.getUrl(true); // First param controls http vs. https
+                // bot.telegram.sendMessage(ctx.chat.id,imageUrl, {parse_mode:"Markdown"});
+                var s = "[graph]("+imageUrl+")"
+                bot.telegram.sendMessage(ctx.chat.id, s,{parse_mode:"Markdown"})
+            })
+        })
 
         bot.command('/startsensor', (ctx) => {
+            if(woody.info===undefined){
+                 ctx.reply("Set your plant/flower first!");
+                 return;
+             }
+
             port.write("3", function(err) { //
                 if (err) {
                     ctx.reply('error')
@@ -227,12 +287,14 @@ SerialPort.list((err, ports) => {
         })
 
         bot.command('/info', (ctx) => {
-            var string ="";
-            string += "*"+elem.plant+"*\n";
+            if(woody.info===undefined){
+                 ctx.reply("Set your plant/flower first!");
+                 return;
+             }            var string ="";
+            string += "*"+elem.plant+"* - "+ woody.botanical;
             var url ="http://www.rosai-e-piante-meilland.it/media/catalog/product/cache/3/image/800x800/040ec09b1e35df139433887a97daa66f/1/0/1060-2946-rosier_edith_piaf_meiramboys-mi-t1000.jpg";
             // url = woody.img+"";
             // url=url.trim();
-            // console.log(woody.img);
             bot.telegram.sendPhoto(ctx.chat.id, url, {caption:string, parse_mode:"Markdown"})
 
             string  = "\n*Light*: "+woody.info.light.description;
@@ -241,19 +303,47 @@ SerialPort.list((err, ports) => {
             bot.telegram.sendMessage(ctx.chat.id, string, {parse_mode:"Markdown"})
         })
 
+        // bot.command('/setplant', (ctx) => {
+        //     console.log(ctx.state);
+        //     if(ctx.state.command.args === '') {
+        //         ctx.reply("name of the plant or flower required \n/setplant plant_name");
+        //         return;
+        //     }
+        //     elem.plant=ctx.state.command.args;
+        //     ctx.reply("You set the plant as a " + ctx.state.command.args);
+        //     setPlant(elem)
+        //     wood_db.search(elem.plant, (err, result)=>{
+        //         woody=result;
+        //     })
+        // });
+
         bot.command('/setplant', (ctx) => {
-            console.log(ctx.state);
             if(ctx.state.command.args === '') {
                 ctx.reply("name of the plant or flower required \n/setplant plant_name");
                 return;
             }
-            elem.plant=ctx.state.command.args;
-            ctx.reply("You set the plant as a " + ctx.state.command.args);
-            setPlant(elem)
-            wood_db.search(elem.plant, (err, result)=>{
-                woody=result;
+            wood_db.commonSearch(ctx.state.command.args, (err, result)=>{
+                var string = "";
+                for (var i = 0; i < result.length; i++) {
+                    string = result[i].botanical+"\n";
+                    ctx.reply(string, Markup.inlineKeyboard([
+                        Markup.callbackButton('Set', 'Set '+string),
+                    ]).extra());
+                }
             })
         });
+        bot.action(/Set (.*)/, (ctx) => {
+            var b = ctx.update.callback_query.data.split(" ")[1];
+            wood_db.searchB(b, (err,result)=>{
+                if(result===undefined) return
+                elem.plant = result.name;
+                elem.botanical = result.botanical;
+                setPlant(elem)
+                woody=result;
+                ctx.reply("You set the plant as a " + elem.botanical);
+            })
+        })
+
 
         bot.command('/help', (ctx) => {
             ctx.reply('Welcome! This is Smart Plant.\nUse the commands to interact.')
@@ -270,12 +360,12 @@ SerialPort.list((err, ports) => {
 
 // setPlant(elem);
 // retrivePlant(0,(err, res)=>{console.log(res);})
-
+// addPlant(elem)
 
 
 function leggi(){
     var x1 = "1,2,3" // commentare quando ci sarà la scheda vera
-    console.log(x1);
+    // console.log(x1);
     var status = x1.split(',');
     var time = getDateTime();
     elem.status[0].date=time;
@@ -296,8 +386,7 @@ function leggi(){
 }
 
 function check(status){
-    console.log(woody);
-    console.log(status);
+    if(woody.info===undefined) return;
     if(status.ph>woody.info.soilph.max){
         bot.telegram.sendMessage(chatId, "PH too Basic!")
     }
@@ -398,4 +487,9 @@ function addPlant(elem) {
     }, function(errorObject) {
         console.log("The read failed: " + errorObject.code);
     });
+}
+
+// set()
+function set(){
+    plants.set({plants:[{a:"b",status:[{a:"b"}]}]})
 }
