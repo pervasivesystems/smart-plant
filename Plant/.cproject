@@ -3,8 +3,8 @@
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		
 		
-		<cconfiguration id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.160018190">
-			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.160018190" moduleId="org.eclipse.cdt.core.settings" name="Debug">
+		<cconfiguration id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.068233892">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.068233892" moduleId="org.eclipse.cdt.core.settings" name="Debug">
 				<externalSettings/>
 				<extensions>
 					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
@@ -16,21 +16,21 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="elf" artifactName="${ProjName}-debug" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.160018190" name="Debug" parent="fr.ac6.managedbuild.config.gnu.cross.exe.debug" postannouncebuildStep="Generating binary and Printing size information:" postbuildStep="arm-none-eabi-objcopy -O binary &quot;${BuildArtifactFileBaseName}.elf&quot; &quot;${ProjName}.bin&quot; &amp;&amp; arm-none-eabi-size -B &quot;${BuildArtifactFileName}&quot; &amp;&amp; make ldclean" preannouncebuildStep="Creating makefile.defs:" prebuildStep="echo &quot;export PREPROC_CMD = ${openstm32_compiler_path}/${compiler_prefix}cpp -E -P&quot; &gt; ${ProjDirPath}/makefile.defs">
-					<folderInfo id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.160018190." name="/" resourcePath="">
-						<toolChain id="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug.198588494" name="Ac6 STM32 MCU GCC" superClass="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug">
-							<option id="fr.ac6.managedbuild.option.gnu.cross.mcu.682631642" name="Mcu" superClass="fr.ac6.managedbuild.option.gnu.cross.mcu" value="STM32L072CZTx" valueType="string"/>
-							<option id="fr.ac6.managedbuild.option.gnu.cross.board.482687402" name="Board" superClass="fr.ac6.managedbuild.option.gnu.cross.board" value="DISCO-L072CZ-LRWAN1" valueType="string"/>
+				<configuration artifactExtension="elf" artifactName="${ProjName}-debug" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.068233892" name="Debug" parent="fr.ac6.managedbuild.config.gnu.cross.exe.debug" postannouncebuildStep="Generating binary and Printing size information:" postbuildStep="arm-none-eabi-objcopy -O binary &quot;${BuildArtifactFileBaseName}.elf&quot; &quot;${ProjName}.bin&quot; &amp;&amp; arm-none-eabi-size -B &quot;${BuildArtifactFileName}&quot; &amp;&amp; make ldclean" preannouncebuildStep="Creating makefile.defs:" prebuildStep="echo &quot;export PREPROC_CMD = ${openstm32_compiler_path}/${compiler_prefix}cpp -E -P&quot; &gt; ${ProjDirPath}/makefile.defs">
+					<folderInfo id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.068233892." name="/" resourcePath="">
+						<toolChain id="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug.384523159" name="Ac6 STM32 MCU GCC" superClass="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug">
+							<option id="fr.ac6.managedbuild.option.gnu.cross.mcu.593499293" name="Mcu" superClass="fr.ac6.managedbuild.option.gnu.cross.mcu" value="STM32L072CZTx" valueType="string"/>
+							<option id="fr.ac6.managedbuild.option.gnu.cross.board.466010639" name="Board" superClass="fr.ac6.managedbuild.option.gnu.cross.board" value="DISCO-L072CZ-LRWAN1" valueType="string"/>
 							
 							
-							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="fr.ac6.managedbuild.targetPlatform.gnu.cross.387212896" isAbstract="false" osList="all" superClass="fr.ac6.managedbuild.targetPlatform.gnu.cross"/>
-							<builder buildPath="${workspace_loc:/Plant}/Debug" id="fr.ac6.managedbuild.builder.gnu.cross.762896393" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="fr.ac6.managedbuild.builder.gnu.cross"/>
-							<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.062485871" name="MCU GCC Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler">
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="fr.ac6.managedbuild.targetPlatform.gnu.cross.560693837" isAbstract="false" osList="all" superClass="fr.ac6.managedbuild.targetPlatform.gnu.cross"/>
+							<builder buildPath="${workspace_loc:/Plant}/Debug" id="fr.ac6.managedbuild.builder.gnu.cross.273154919" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="fr.ac6.managedbuild.builder.gnu.cross"/>
+							<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.471220650" name="MCU GCC Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler">
 								
-								<option id="fr.ac6.managedbuild.gnu.c.compiler.option.optimization.level.669956532" name="Optimization Level" superClass="fr.ac6.managedbuild.gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" value="fr.ac6.managedbuild.gnu.c.optimization.level.more" valueType="enumerated"/>
-								<option id="gnu.c.compiler.option.debugging.level.639140567" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
+								<option id="fr.ac6.managedbuild.gnu.c.compiler.option.optimization.level.831528918" name="Optimization Level" superClass="fr.ac6.managedbuild.gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" value="fr.ac6.managedbuild.gnu.c.optimization.level.more" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.debugging.level.927774893" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								
-								<option id="gnu.c.compiler.option.include.paths.988009683" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+								<option id="gnu.c.compiler.option.include.paths.530618078" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									
 									<listOptionValue builtIn="false" value="&quot;../.&quot;"/>
 									
@@ -75,7 +75,7 @@
 									<listOptionValue builtIn="false" value="&quot;../&quot;"/>
 									
 								</option>
-								<option id="gnu.c.compiler.option.preprocessor.def.symbols.253574173" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
+								<option id="gnu.c.compiler.option.preprocessor.def.symbols.227112836" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									
 									<listOptionValue builtIn="false" value="__MBED__=1"/>
 									
@@ -155,7 +155,7 @@
 									
 									<listOptionValue builtIn="false" value="TOOLCHAIN_GCC_ARM"/>
 									
-									<listOptionValue builtIn="false" value="MBED_BUILD_TIMESTAMP=1526912825.44"/>
+									<listOptionValue builtIn="false" value="MBED_BUILD_TIMESTAMP=1527243737.86"/>
 									
 									<listOptionValue builtIn="false" value="DEVICE_SPI=1"/>
 									
@@ -187,14 +187,14 @@
 									
 								</option>
 								
-								<option id="gnu.c.compiler.option.include.files.836574271" name="Include files (-include)" superClass="gnu.c.compiler.option.include.files" useByScannerDiscovery="false" valueType="includeFiles">
-									<listOptionValue builtIn="false" value="${ProjDirPath}//tmp/tmprWQtMD/mbed_config.h"/>
+								<option id="gnu.c.compiler.option.include.files.653156660" name="Include files (-include)" superClass="gnu.c.compiler.option.include.files" useByScannerDiscovery="false" valueType="includeFiles">
+									<listOptionValue builtIn="false" value="${ProjDirPath}//tmp/tmpmeSpBC/mbed_config.h"/>
 								</option>
 								
 								
 								
-								<option id="gnu.c.compiler.option.dialect.std.321739206" superClass="gnu.c.compiler.option.dialect.std" value="gnu.c.compiler.dialect.gnu99" valueType="enumerated"/>
-								<option id="gnu.c.compiler.option.dialect.std.012648052" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.c99" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.dialect.std.978342979" superClass="gnu.c.compiler.option.dialect.std" value="gnu.c.compiler.dialect.gnu99" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.dialect.std.426274285" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.c99" valueType="enumerated"/>
 								
 								
 								
@@ -204,7 +204,7 @@
 								
 								
 								
-								<option id="gnu.c.compiler.option.warnings.extrawarn.701828065" name="Extra warnings (-Wextra)" superClass="gnu.c.compiler.option.warnings.extrawarn" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="gnu.c.compiler.option.warnings.extrawarn.306728550" name="Extra warnings (-Wextra)" superClass="gnu.c.compiler.option.warnings.extrawarn" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								
 								
 								
@@ -214,27 +214,27 @@
 								
 								
 								
-								<option id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.fdata.539361123" name="Place the data in their own section (-fdata-sections)" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.fdata" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.fdata.053122539" name="Place the data in their own section (-fdata-sections)" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.fdata" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								
 								
-								<option id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.ffunction.550002241" name="Place the function in their own section (-ffunction-sections)" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.ffunction" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.ffunction.679513686" name="Place the function in their own section (-ffunction-sections)" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.ffunction" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								
 								
-								<option id="gnu.c.compiler.option.optimization.flags.337783174" superClass="gnu.c.compiler.option.optimization.flags" useByScannerDiscovery="false" value=" -funsigned-char -fno-delete-null-pointer-checks -fomit-frame-pointer -fmessage-length=0 -fno-builtin" valueType="string"/>
+								<option id="gnu.c.compiler.option.optimization.flags.317757422" superClass="gnu.c.compiler.option.optimization.flags" useByScannerDiscovery="false" value=" -funsigned-char -fno-delete-null-pointer-checks -fomit-frame-pointer -fmessage-length=0 -fno-builtin" valueType="string"/>
 								
 								
-								<option id="fr.ac6.managedbuid.gnu.c.compiler.option.misc.other.874663697" name="Other flags" superClass="fr.ac6.managedbuid.gnu.c.compiler.option.misc.other" useByScannerDiscovery="false" value="  -Wno-unused-parameter -Wno-missing-field-initializers" valueType="string"/>
+								<option id="fr.ac6.managedbuid.gnu.c.compiler.option.misc.other.074344600" name="Other flags" superClass="fr.ac6.managedbuid.gnu.c.compiler.option.misc.other" useByScannerDiscovery="false" value="  -Wno-unused-parameter -Wno-missing-field-initializers" valueType="string"/>
 								
 								
-								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c.802711146" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c"/>
-								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.s.450727193" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.s"/>
+								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c.508141619" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c"/>
+								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.s.338834396" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.s"/>
 							</tool>
-							<tool id="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.962743466" name="MCU G++ Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler">
+							<tool id="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.392067030" name="MCU G++ Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler">
 								
-								<option id="fr.ac6.managedbuild.gnu.cpp.compiler.option.optimization.level.746465791" name="Optimization Level" superClass="fr.ac6.managedbuild.gnu.cpp.compiler.option.optimization.level" useByScannerDiscovery="false"/>
-								<option id="gnu.cpp.compiler.option.debugging.level.384436269" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
+								<option id="fr.ac6.managedbuild.gnu.cpp.compiler.option.optimization.level.575325097" name="Optimization Level" superClass="fr.ac6.managedbuild.gnu.cpp.compiler.option.optimization.level" useByScannerDiscovery="false"/>
+								<option id="gnu.cpp.compiler.option.debugging.level.967091304" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								
-								<option id="gnu.cpp.compiler.option.include.paths.487410010" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+								<option id="gnu.cpp.compiler.option.include.paths.438652372" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									
 									<listOptionValue builtIn="false" value="&quot;../.&quot;"/>
 									
@@ -279,7 +279,7 @@
 									<listOptionValue builtIn="false" value="&quot;../&quot;"/>
 									
 								</option>
-								<option id="gnu.cpp.compiler.option.preprocessor.def.828523872" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
+								<option id="gnu.cpp.compiler.option.preprocessor.def.353374183" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 								
 									<listOptionValue builtIn="false" value="__MBED__=1"/>
 								
@@ -359,7 +359,7 @@
 								
 									<listOptionValue builtIn="false" value="TOOLCHAIN_GCC_ARM"/>
 								
-									<listOptionValue builtIn="false" value="MBED_BUILD_TIMESTAMP=1526912825.44"/>
+									<listOptionValue builtIn="false" value="MBED_BUILD_TIMESTAMP=1527243737.86"/>
 								
 									<listOptionValue builtIn="false" value="DEVICE_SPI=1"/>
 								
@@ -391,13 +391,13 @@
 								
 								</option>
 								
-								<option id="gnu.cpp.compiler.option.include.files.566162422" name="Include files (-include)" superClass="gnu.cpp.compiler.option.include.files" useByScannerDiscovery="false" valueType="includeFiles">
-									<listOptionValue builtIn="false" value="${ProjDirPath}//tmp/tmprWQtMD/mbed_config.h"/>
+								<option id="gnu.cpp.compiler.option.include.files.923803126" name="Include files (-include)" superClass="gnu.cpp.compiler.option.include.files" useByScannerDiscovery="false" valueType="includeFiles">
+									<listOptionValue builtIn="false" value="${ProjDirPath}//tmp/tmpmeSpBC/mbed_config.h"/>
 								</option>
 								
 								
 								
-								<option id="gnu.cpp.compiler.option.dialect.std.945282886" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.gnu99" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.dialect.std.307239624" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.gnu99" valueType="enumerated"/>
 								
 								
 								
@@ -406,9 +406,9 @@
 								
 								
 								
-								<option id="gnu.cpp.compiler.option.warnings.allwarn.874407419" superClass="gnu.cpp.compiler.option.warnings.allwarn" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="gnu.cpp.compiler.option.warnings.allwarn.838248271" superClass="gnu.cpp.compiler.option.warnings.allwarn" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								
-								<option id="gnu.cpp.compiler.option.warnings.extrawarn.783539709" superClass="gnu.cpp.compiler.option.warnings.extrawarn" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="gnu.cpp.compiler.option.warnings.extrawarn.490528011" superClass="gnu.cpp.compiler.option.warnings.extrawarn" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								
 															
 								
@@ -418,27 +418,27 @@
 								
 								
 								
-								<option id="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.fdata.181156593" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.fdata" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.fdata.203626590" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.fdata" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								
 								
-								<option id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.ffunction.556423532" name="Place the function in their own section (-ffunction-sections)" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.ffunction" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.ffunction.937616380" name="Place the function in their own section (-ffunction-sections)" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.ffunction" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								
 								
-								<option id="gnu.cpp.compiler.option.optimization.flags.995707876" superClass="gnu.cpp.compiler.option.optimization.flags" useByScannerDiscovery="false" value=" -funsigned-char -fno-delete-null-pointer-checks -fomit-frame-pointer -fmessage-length=0 -fno-builtin" valueType="string"/>
+								<option id="gnu.cpp.compiler.option.optimization.flags.081164292" superClass="gnu.cpp.compiler.option.optimization.flags" useByScannerDiscovery="false" value=" -funsigned-char -fno-delete-null-pointer-checks -fomit-frame-pointer -fmessage-length=0 -fno-builtin" valueType="string"/>
 								
 								
-								<option id="fr.ac6.managedbuild.gnu.cpp.compiler.option.misc.other.764032207" name="Other flags" superClass="fr.ac6.managedbuild.gnu.cpp.compiler.option.misc.other" useByScannerDiscovery="false" value=" -Wvla -Wno-unused-parameter -Wno-missing-field-initializers" valueType="string"/>
+								<option id="fr.ac6.managedbuild.gnu.cpp.compiler.option.misc.other.134313642" name="Other flags" superClass="fr.ac6.managedbuild.gnu.cpp.compiler.option.misc.other" useByScannerDiscovery="false" value=" -Wvla -Wno-unused-parameter -Wno-missing-field-initializers" valueType="string"/>
 								
 								
-								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.input.cpp.638077584" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.input.cpp"/>
-								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.input.s.084878903" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.input.s"/>
+								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.input.cpp.518994649" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.input.cpp"/>
+								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.input.s.227308295" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.input.s"/>
 							</tool>
-							<tool id="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker.305725498" name="MCU G++ Linker" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker">
-								<option id="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker.script.454109971" name="Linker Script (-T)" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker.script" value="${ProjDirPath}/Debug/linker-script-debug.ld" valueType="string"/>
+							<tool id="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker.054460498" name="MCU G++ Linker" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker">
+								<option id="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker.script.333067245" name="Linker Script (-T)" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker.script" value="${ProjDirPath}/Debug/linker-script-debug.ld" valueType="string"/>
 								
-								<option id="gnu.cpp.link.option.flags.920294484" name="Linker flags" superClass="gnu.cpp.link.option.flags" value="-Wl,--wrap=main -Wl,--wrap=_malloc_r -Wl,--wrap=_free_r -Wl,--wrap=_realloc_r -Wl,--wrap=_memalign_r -Wl,--wrap=_calloc_r -Wl,--wrap=exit -Wl,--wrap=atexit -DMBED_DEBUG -DMBED_TRAP_ERRORS_ENABLED=1 -Wl,-n -Wl,--start-group -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys -Wl,--end-group" valueType="string"/>
+								<option id="gnu.cpp.link.option.flags.047509838" name="Linker flags" superClass="gnu.cpp.link.option.flags" value="-Wl,--wrap=main -Wl,--wrap=_malloc_r -Wl,--wrap=_free_r -Wl,--wrap=_realloc_r -Wl,--wrap=_memalign_r -Wl,--wrap=_calloc_r -Wl,--wrap=exit -Wl,--wrap=atexit -DMBED_DEBUG -DMBED_TRAP_ERRORS_ENABLED=1 -Wl,-n -Wl,--start-group -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys -Wl,--end-group" valueType="string"/>
 								
-								<option id="gnu.cpp.link.option.userobjs.844682785" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
+								<option id="gnu.cpp.link.option.userobjs.052285604" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
 									
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/mbed/TARGET_DISCO_L072CZ_LRWAN1/TOOLCHAIN_GCC_ARM/startup_stm32l072xx.o}&quot;"/>
 									
@@ -637,7 +637,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/mbed/TARGET_DISCO_L072CZ_LRWAN1/TOOLCHAIN_GCC_ARM/us_ticker_32b.o}&quot;"/>
 									
 								</option>
-								<option id="gnu.cpp.link.option.libs.808458914" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
+								<option id="gnu.cpp.link.option.libs.268640070" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									
 									<listOptionValue builtIn="false" value="mbed"/>
 									
@@ -653,19 +653,19 @@
 								
 								
 								
-								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.135353248" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.737304191" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
 								</inputType>
-								<option id="gnu.cpp.link.option.paths.986574292" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
+								<option id="gnu.cpp.link.option.paths.876534862" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/mbed/TARGET_DISCO_L072CZ_LRWAN1/TOOLCHAIN_GCC_ARM}&quot;"/>
 									
 								</option>
 							</tool>
-							<tool id="fr.ac6.managedbuild.tool.gnu.archiver.360167692" name="MCU GCC Archiver" superClass="fr.ac6.managedbuild.tool.gnu.archiver"/>
-							<tool id="fr.ac6.managedbuild.tool.gnu.cross.assembler.977746399" name="MCU GCC Assembler" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler">
-								<option id="gnu.both.asm.option.include.paths.620061046" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
+							<tool id="fr.ac6.managedbuild.tool.gnu.archiver.392292035" name="MCU GCC Archiver" superClass="fr.ac6.managedbuild.tool.gnu.archiver"/>
+							<tool id="fr.ac6.managedbuild.tool.gnu.cross.assembler.339990164" name="MCU GCC Assembler" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler">
+								<option id="gnu.both.asm.option.include.paths.674993326" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
 									
 									<listOptionValue builtIn="false" value="&quot;../.&quot;"/>
 									
@@ -711,11 +711,11 @@
 									
 								</option>
 								
-								<option id="gnu.both.asm.option.flags.315948600" superClass="gnu.both.asm.option.flags" useByScannerDiscovery="false" value=" --defsym __CMSIS_RTOS=1 --defsym __MBED_CMSIS_RTOS_CM=1 --defsym TRANSACTION_QUEUE_SIZE_SPI=2 --defsym __CORTEX_M0PLUS=1 --defsym ARM_MATH_CM0PLUS=1 --defsym MBED_DEBUG=1 --defsym MBED_TRAP_ERRORS_ENABLED=1 " valueType="string"/>
+								<option id="gnu.both.asm.option.flags.331860270" superClass="gnu.both.asm.option.flags" useByScannerDiscovery="false" value=" --defsym __CMSIS_RTOS=1 --defsym __MBED_CMSIS_RTOS_CM=1 --defsym TRANSACTION_QUEUE_SIZE_SPI=2 --defsym __CORTEX_M0PLUS=1 --defsym ARM_MATH_CM0PLUS=1 --defsym MBED_DEBUG=1 --defsym MBED_TRAP_ERRORS_ENABLED=1 " valueType="string"/>
 								
 								
-								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.979694154" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
-								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.assembler.input.712150408" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler.input"/>
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.114775002" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.assembler.input.145727462" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler.input"/>
 							</tool>
 						</toolChain>
 					</folderInfo>
@@ -728,8 +728,8 @@
 		</cconfiguration>
 		
 		
-		<cconfiguration id="fr.ac6.managedbuild.config.gnu.cross.exe.release.558777211">
-			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="fr.ac6.managedbuild.config.gnu.cross.exe.release.558777211" moduleId="org.eclipse.cdt.core.settings" name="Release">
+		<cconfiguration id="fr.ac6.managedbuild.config.gnu.cross.exe.release.536787499">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="fr.ac6.managedbuild.config.gnu.cross.exe.release.536787499" moduleId="org.eclipse.cdt.core.settings" name="Release">
 				<externalSettings/>
 				<extensions>
 					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
@@ -741,21 +741,21 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="elf" artifactName="${ProjName}-release" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -rf" description="" id="fr.ac6.managedbuild.config.gnu.cross.exe.release.558777211" name="Release" parent="fr.ac6.managedbuild.config.gnu.cross.exe.release" postannouncebuildStep="Generating binary and Printing size information:" postbuildStep="arm-none-eabi-objcopy -O binary &quot;${BuildArtifactFileBaseName}.elf&quot; &quot;${ProjName}.bin&quot; &amp;&amp; arm-none-eabi-size -B &quot;${BuildArtifactFileName}&quot; &amp;&amp; make ldclean" preannouncebuildStep="Creating makefile.defs:" prebuildStep="echo &quot;export PREPROC_CMD = ${openstm32_compiler_path}/${compiler_prefix}cpp -E -P&quot; &gt; ${ProjDirPath}/makefile.defs">
-					<folderInfo id="fr.ac6.managedbuild.config.gnu.cross.exe.release.558777211." name="/" resourcePath="">
-						<toolChain id="fr.ac6.managedbuild.toolchain.gnu.cross.exe.release.353645187" name="Ac6 STM32 MCU GCC" superClass="fr.ac6.managedbuild.toolchain.gnu.cross.exe.release">
-							<option id="fr.ac6.managedbuild.option.gnu.cross.mcu.943366035" name="Mcu" superClass="fr.ac6.managedbuild.option.gnu.cross.mcu" value="STM32L072CZTx" valueType="string"/>
-							<option id="fr.ac6.managedbuild.option.gnu.cross.board.627000654" name="Board" superClass="fr.ac6.managedbuild.option.gnu.cross.board" value="DISCO-L072CZ-LRWAN1" valueType="string"/>
+				<configuration artifactExtension="elf" artifactName="${ProjName}-release" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="rm -rf" description="" id="fr.ac6.managedbuild.config.gnu.cross.exe.release.536787499" name="Release" parent="fr.ac6.managedbuild.config.gnu.cross.exe.release" postannouncebuildStep="Generating binary and Printing size information:" postbuildStep="arm-none-eabi-objcopy -O binary &quot;${BuildArtifactFileBaseName}.elf&quot; &quot;${ProjName}.bin&quot; &amp;&amp; arm-none-eabi-size -B &quot;${BuildArtifactFileName}&quot; &amp;&amp; make ldclean" preannouncebuildStep="Creating makefile.defs:" prebuildStep="echo &quot;export PREPROC_CMD = ${openstm32_compiler_path}/${compiler_prefix}cpp -E -P&quot; &gt; ${ProjDirPath}/makefile.defs">
+					<folderInfo id="fr.ac6.managedbuild.config.gnu.cross.exe.release.536787499." name="/" resourcePath="">
+						<toolChain id="fr.ac6.managedbuild.toolchain.gnu.cross.exe.release.344288765" name="Ac6 STM32 MCU GCC" superClass="fr.ac6.managedbuild.toolchain.gnu.cross.exe.release">
+							<option id="fr.ac6.managedbuild.option.gnu.cross.mcu.417699225" name="Mcu" superClass="fr.ac6.managedbuild.option.gnu.cross.mcu" value="STM32L072CZTx" valueType="string"/>
+							<option id="fr.ac6.managedbuild.option.gnu.cross.board.780463197" name="Board" superClass="fr.ac6.managedbuild.option.gnu.cross.board" value="DISCO-L072CZ-LRWAN1" valueType="string"/>
 							
 							
-							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="fr.ac6.managedbuild.targetPlatform.gnu.cross.368492370" isAbstract="false" osList="all" superClass="fr.ac6.managedbuild.targetPlatform.gnu.cross"/>
-							<builder buildPath="${workspace_loc:/Plant}/Release" id="fr.ac6.managedbuild.builder.gnu.cross.316400905" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="fr.ac6.managedbuild.builder.gnu.cross"/>
-							<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.900925998" name="MCU GCC Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler">
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="fr.ac6.managedbuild.targetPlatform.gnu.cross.362211840" isAbstract="false" osList="all" superClass="fr.ac6.managedbuild.targetPlatform.gnu.cross"/>
+							<builder buildPath="${workspace_loc:/Plant}/Release" id="fr.ac6.managedbuild.builder.gnu.cross.310059583" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="fr.ac6.managedbuild.builder.gnu.cross"/>
+							<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.653736680" name="MCU GCC Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler">
 								
-								<option id="fr.ac6.managedbuild.gnu.c.compiler.option.optimization.level.115634920" name="Optimization Level" superClass="fr.ac6.managedbuild.gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" value="fr.ac6.managedbuild.gnu.c.optimization.level.most" valueType="enumerated"/>
-								<option id="gnu.c.compiler.option.debugging.level.689805498" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.none" valueType="enumerated"/>
+								<option id="fr.ac6.managedbuild.gnu.c.compiler.option.optimization.level.523002165" name="Optimization Level" superClass="fr.ac6.managedbuild.gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" value="fr.ac6.managedbuild.gnu.c.optimization.level.most" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.debugging.level.487467931" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.none" valueType="enumerated"/>
 								
-								<option id="gnu.c.compiler.option.include.paths.322184030" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+								<option id="gnu.c.compiler.option.include.paths.992367116" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									
 									<listOptionValue builtIn="false" value="&quot;../.&quot;"/>
 									
@@ -800,7 +800,7 @@
 									<listOptionValue builtIn="false" value="&quot;../&quot;"/>
 									
 								</option>
-								<option id="gnu.c.compiler.option.preprocessor.def.symbols.851560875" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
+								<option id="gnu.c.compiler.option.preprocessor.def.symbols.561572442" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									
 									<listOptionValue builtIn="false" value="__MBED__=1"/>
 									
@@ -880,7 +880,7 @@
 									
 									<listOptionValue builtIn="false" value="TOOLCHAIN_GCC_ARM"/>
 									
-									<listOptionValue builtIn="false" value="MBED_BUILD_TIMESTAMP=1526912825.44"/>
+									<listOptionValue builtIn="false" value="MBED_BUILD_TIMESTAMP=1527243737.86"/>
 									
 									<listOptionValue builtIn="false" value="DEVICE_SPI=1"/>
 									
@@ -912,14 +912,14 @@
 									
 								</option>
 								
-								<option id="gnu.c.compiler.option.include.files.766126683" name="Include files (-include)" superClass="gnu.c.compiler.option.include.files" useByScannerDiscovery="false" valueType="includeFiles">
-									<listOptionValue builtIn="false" value="${ProjDirPath}//tmp/tmprWQtMD/mbed_config.h"/>
+								<option id="gnu.c.compiler.option.include.files.396401515" name="Include files (-include)" superClass="gnu.c.compiler.option.include.files" useByScannerDiscovery="false" valueType="includeFiles">
+									<listOptionValue builtIn="false" value="${ProjDirPath}//tmp/tmpmeSpBC/mbed_config.h"/>
 								</option>
 								
 								
 								
-								<option id="gnu.c.compiler.option.dialect.std.274693682" superClass="gnu.c.compiler.option.dialect.std" value="gnu.c.compiler.dialect.gnu99" valueType="enumerated"/>
-								<option id="gnu.c.compiler.option.dialect.std.716587494" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.c99" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.dialect.std.469911701" superClass="gnu.c.compiler.option.dialect.std" value="gnu.c.compiler.dialect.gnu99" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.dialect.std.051625296" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.c99" valueType="enumerated"/>
 								
 								
 								
@@ -929,7 +929,7 @@
 								
 								
 								
-								<option id="gnu.c.compiler.option.warnings.extrawarn.499283418" name="Extra warnings (-Wextra)" superClass="gnu.c.compiler.option.warnings.extrawarn" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="gnu.c.compiler.option.warnings.extrawarn.919882722" name="Extra warnings (-Wextra)" superClass="gnu.c.compiler.option.warnings.extrawarn" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								
 								
 								
@@ -939,27 +939,27 @@
 								
 								
 								
-								<option id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.fdata.267680115" name="Place the data in their own section (-fdata-sections)" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.fdata" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.fdata.522691028" name="Place the data in their own section (-fdata-sections)" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.fdata" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								
 								
-								<option id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.ffunction.981354889" name="Place the function in their own section (-ffunction-sections)" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.ffunction" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.ffunction.194820264" name="Place the function in their own section (-ffunction-sections)" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.ffunction" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								
 								
-								<option id="gnu.c.compiler.option.optimization.flags.428804839" superClass="gnu.c.compiler.option.optimization.flags" useByScannerDiscovery="false" value=" -funsigned-char -fno-delete-null-pointer-checks -fomit-frame-pointer -fmessage-length=0 -fno-builtin" valueType="string"/>
+								<option id="gnu.c.compiler.option.optimization.flags.449521296" superClass="gnu.c.compiler.option.optimization.flags" useByScannerDiscovery="false" value=" -funsigned-char -fno-delete-null-pointer-checks -fomit-frame-pointer -fmessage-length=0 -fno-builtin" valueType="string"/>
 								
 								
-								<option id="fr.ac6.managedbuid.gnu.c.compiler.option.misc.other.962256895" name="Other flags" superClass="fr.ac6.managedbuid.gnu.c.compiler.option.misc.other" useByScannerDiscovery="false" value="  -Wno-unused-parameter -Wno-missing-field-initializers" valueType="string"/>
+								<option id="fr.ac6.managedbuid.gnu.c.compiler.option.misc.other.709436414" name="Other flags" superClass="fr.ac6.managedbuid.gnu.c.compiler.option.misc.other" useByScannerDiscovery="false" value="  -Wno-unused-parameter -Wno-missing-field-initializers" valueType="string"/>
 								
 								
-								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c.687003131" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c"/>
-								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.s.213348778" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.s"/>
+								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c.132597548" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c"/>
+								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.s.508897271" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.s"/>
 							</tool>
-							<tool id="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.292468205" name="MCU G++ Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler">
+							<tool id="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.074500006" name="MCU G++ Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler">
 								
-								<option id="fr.ac6.managedbuild.gnu.cpp.compiler.option.optimization.level.238316437" name="Optimization Level" superClass="fr.ac6.managedbuild.gnu.cpp.compiler.option.optimization.level" useByScannerDiscovery="false" value="fr.ac6.managedbuild.gnu.cpp.optimization.level.most" valueType="enumerated"/>
-								<option id="gnu.cpp.compiler.option.debugging.level.239515371" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.none" valueType="enumerated"/>
+								<option id="fr.ac6.managedbuild.gnu.cpp.compiler.option.optimization.level.974679087" name="Optimization Level" superClass="fr.ac6.managedbuild.gnu.cpp.compiler.option.optimization.level" useByScannerDiscovery="false" value="fr.ac6.managedbuild.gnu.cpp.optimization.level.most" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.debugging.level.172287996" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.none" valueType="enumerated"/>
 								
-								<option id="gnu.cpp.compiler.option.include.paths.754790738" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+								<option id="gnu.cpp.compiler.option.include.paths.348025974" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									
 									<listOptionValue builtIn="false" value="&quot;../.&quot;"/>
 									
@@ -1004,7 +1004,7 @@
 									<listOptionValue builtIn="false" value="&quot;../&quot;"/>
 									
 								</option>
-								<option id="gnu.cpp.compiler.option.preprocessor.def.777700048" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
+								<option id="gnu.cpp.compiler.option.preprocessor.def.319905569" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 								
 									<listOptionValue builtIn="false" value="__MBED__=1"/>
 								
@@ -1084,7 +1084,7 @@
 								
 									<listOptionValue builtIn="false" value="TOOLCHAIN_GCC_ARM"/>
 								
-									<listOptionValue builtIn="false" value="MBED_BUILD_TIMESTAMP=1526912825.44"/>
+									<listOptionValue builtIn="false" value="MBED_BUILD_TIMESTAMP=1527243737.86"/>
 								
 									<listOptionValue builtIn="false" value="DEVICE_SPI=1"/>
 								
@@ -1116,13 +1116,13 @@
 								
 								</option>
 								
-								<option id="gnu.cpp.compiler.option.include.files.817180834" name="Include files (-include)" superClass="gnu.cpp.compiler.option.include.files" useByScannerDiscovery="false" valueType="includeFiles">
-									<listOptionValue builtIn="false" value="${ProjDirPath}//tmp/tmprWQtMD/mbed_config.h"/>
+								<option id="gnu.cpp.compiler.option.include.files.639231904" name="Include files (-include)" superClass="gnu.cpp.compiler.option.include.files" useByScannerDiscovery="false" valueType="includeFiles">
+									<listOptionValue builtIn="false" value="${ProjDirPath}//tmp/tmpmeSpBC/mbed_config.h"/>
 								</option>
 								
 								
 								
-								<option id="gnu.cpp.compiler.option.dialect.std.322709940" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.gnu99" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.dialect.std.914572432" name="Language standard" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.gnu99" valueType="enumerated"/>
 								
 								
 								
@@ -1131,9 +1131,9 @@
 								
 								
 								
-								<option id="gnu.cpp.compiler.option.warnings.allwarn.764737586" superClass="gnu.cpp.compiler.option.warnings.allwarn" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="gnu.cpp.compiler.option.warnings.allwarn.888597253" superClass="gnu.cpp.compiler.option.warnings.allwarn" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								
-								<option id="gnu.cpp.compiler.option.warnings.extrawarn.927088758" superClass="gnu.cpp.compiler.option.warnings.extrawarn" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="gnu.cpp.compiler.option.warnings.extrawarn.065171956" superClass="gnu.cpp.compiler.option.warnings.extrawarn" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								
 															
 								
@@ -1143,27 +1143,27 @@
 								
 								
 								
-								<option id="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.fdata.706358544" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.fdata" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.fdata.771571937" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.fdata" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								
 								
-								<option id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.ffunction.805148607" name="Place the function in their own section (-ffunction-sections)" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.ffunction" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.ffunction.207038972" name="Place the function in their own section (-ffunction-sections)" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.ffunction" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								
 								
-								<option id="gnu.cpp.compiler.option.optimization.flags.717264330" superClass="gnu.cpp.compiler.option.optimization.flags" useByScannerDiscovery="false" value=" -funsigned-char -fno-delete-null-pointer-checks -fomit-frame-pointer -fmessage-length=0 -fno-builtin" valueType="string"/>
+								<option id="gnu.cpp.compiler.option.optimization.flags.335523241" superClass="gnu.cpp.compiler.option.optimization.flags" useByScannerDiscovery="false" value=" -funsigned-char -fno-delete-null-pointer-checks -fomit-frame-pointer -fmessage-length=0 -fno-builtin" valueType="string"/>
 								
 								
-								<option id="fr.ac6.managedbuild.gnu.cpp.compiler.option.misc.other.695016404" name="Other flags" superClass="fr.ac6.managedbuild.gnu.cpp.compiler.option.misc.other" useByScannerDiscovery="false" value=" -Wvla -Wno-unused-parameter -Wno-missing-field-initializers" valueType="string"/>
+								<option id="fr.ac6.managedbuild.gnu.cpp.compiler.option.misc.other.659378115" name="Other flags" superClass="fr.ac6.managedbuild.gnu.cpp.compiler.option.misc.other" useByScannerDiscovery="false" value=" -Wvla -Wno-unused-parameter -Wno-missing-field-initializers" valueType="string"/>
 								
 								
-								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.input.cpp.574513261" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.input.cpp"/>
-								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.input.s.433136604" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.input.s"/>
+								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.input.cpp.354426297" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.input.cpp"/>
+								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.input.s.757515435" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.input.s"/>
 							</tool>
-							<tool id="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker.572447253" name="MCU G++ Linker" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker">
-								<option id="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker.script.281589030" name="Linker Script (-T)" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker.script" value="${ProjDirPath}/Release/linker-script-release.ld" valueType="string"/>
+							<tool id="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker.921571141" name="MCU G++ Linker" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker">
+								<option id="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker.script.835198898" name="Linker Script (-T)" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker.script" value="${ProjDirPath}/Release/linker-script-release.ld" valueType="string"/>
 								
-								<option id="gnu.cpp.link.option.flags.881271545" name="Linker flags" superClass="gnu.cpp.link.option.flags" value="-Wl,--wrap=main -Wl,--wrap=_malloc_r -Wl,--wrap=_free_r -Wl,--wrap=_realloc_r -Wl,--wrap=_memalign_r -Wl,--wrap=_calloc_r -Wl,--wrap=exit -Wl,--wrap=atexit -DNDEBUG -Wl,-n -Wl,--start-group -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys -Wl,--end-group" valueType="string"/>
+								<option id="gnu.cpp.link.option.flags.140649350" name="Linker flags" superClass="gnu.cpp.link.option.flags" value="-Wl,--wrap=main -Wl,--wrap=_malloc_r -Wl,--wrap=_free_r -Wl,--wrap=_realloc_r -Wl,--wrap=_memalign_r -Wl,--wrap=_calloc_r -Wl,--wrap=exit -Wl,--wrap=atexit -DNDEBUG -Wl,-n -Wl,--start-group -lstdc++ -lsupc++ -lm -lc -lgcc -lnosys -Wl,--end-group" valueType="string"/>
 								
-								<option id="gnu.cpp.link.option.userobjs.922676522" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
+								<option id="gnu.cpp.link.option.userobjs.167097176" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
 									
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/mbed/TARGET_DISCO_L072CZ_LRWAN1/TOOLCHAIN_GCC_ARM/startup_stm32l072xx.o}&quot;"/>
 									
@@ -1362,7 +1362,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/mbed/TARGET_DISCO_L072CZ_LRWAN1/TOOLCHAIN_GCC_ARM/us_ticker_32b.o}&quot;"/>
 									
 								</option>
-								<option id="gnu.cpp.link.option.libs.018548872" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
+								<option id="gnu.cpp.link.option.libs.641209288" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									
 									<listOptionValue builtIn="false" value="mbed"/>
 									
@@ -1378,19 +1378,19 @@
 								
 								
 								
-								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.280991708" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.350620963" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
 								</inputType>
-								<option id="gnu.cpp.link.option.paths.319562275" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
+								<option id="gnu.cpp.link.option.paths.754956545" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/mbed/TARGET_DISCO_L072CZ_LRWAN1/TOOLCHAIN_GCC_ARM}&quot;"/>
 									
 								</option>
 							</tool>
-							<tool id="fr.ac6.managedbuild.tool.gnu.archiver.566769609" name="MCU GCC Archiver" superClass="fr.ac6.managedbuild.tool.gnu.archiver"/>
-							<tool id="fr.ac6.managedbuild.tool.gnu.cross.assembler.221874211" name="MCU GCC Assembler" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler">
-								<option id="gnu.both.asm.option.include.paths.652149096" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
+							<tool id="fr.ac6.managedbuild.tool.gnu.archiver.325491108" name="MCU GCC Archiver" superClass="fr.ac6.managedbuild.tool.gnu.archiver"/>
+							<tool id="fr.ac6.managedbuild.tool.gnu.cross.assembler.822396634" name="MCU GCC Assembler" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler">
+								<option id="gnu.both.asm.option.include.paths.328593542" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
 									
 									<listOptionValue builtIn="false" value="&quot;../.&quot;"/>
 									
@@ -1436,11 +1436,11 @@
 									
 								</option>
 								
-								<option id="gnu.both.asm.option.flags.486235475" superClass="gnu.both.asm.option.flags" useByScannerDiscovery="false" value=" --defsym __CMSIS_RTOS=1 --defsym __MBED_CMSIS_RTOS_CM=1 --defsym TRANSACTION_QUEUE_SIZE_SPI=2 --defsym __CORTEX_M0PLUS=1 --defsym ARM_MATH_CM0PLUS=1 --defsym MBED_DEBUG=1 --defsym MBED_TRAP_ERRORS_ENABLED=1 --defsym NDEBUG=1 " valueType="string"/>
+								<option id="gnu.both.asm.option.flags.137502190" superClass="gnu.both.asm.option.flags" useByScannerDiscovery="false" value=" --defsym __CMSIS_RTOS=1 --defsym __MBED_CMSIS_RTOS_CM=1 --defsym TRANSACTION_QUEUE_SIZE_SPI=2 --defsym __CORTEX_M0PLUS=1 --defsym ARM_MATH_CM0PLUS=1 --defsym MBED_DEBUG=1 --defsym MBED_TRAP_ERRORS_ENABLED=1 --defsym NDEBUG=1 " valueType="string"/>
 								
 								
-								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.661935544" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
-								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.assembler.input.742942185" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler.input"/>
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.808337384" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.assembler.input.790873937" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler.input"/>
 							</tool>
 						</toolChain>
 					</folderInfo>
@@ -1454,24 +1454,24 @@
 		
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-		<project id="Plant.fr.ac6.managedbuild.target.gnu.cross.exe.525749878" name="Executable" projectType="fr.ac6.managedbuild.target.gnu.cross.exe"/>
+		<project id="Plant.fr.ac6.managedbuild.target.gnu.cross.exe.106656633" name="Executable" projectType="fr.ac6.managedbuild.target.gnu.cross.exe"/>
 	</storageModule>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		
 			
-		<scannerConfigBuildInfo instanceId="fr.ac6.managedbuild.config.gnu.cross.exe.debug.160018190;fr.ac6.managedbuild.config.gnu.cross.exe.debug.160018190.;fr.ac6.managedbuild.tool.gnu.cross.c.compiler.062485871;fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c.802711146">
+		<scannerConfigBuildInfo instanceId="fr.ac6.managedbuild.config.gnu.cross.exe.debug.068233892;fr.ac6.managedbuild.config.gnu.cross.exe.debug.068233892.;fr.ac6.managedbuild.tool.gnu.cross.c.compiler.471220650;fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c.508141619">
 			<autodiscovery enabled="false" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="fr.ac6.managedbuild.config.gnu.cross.exe.debug.160018190;fr.ac6.managedbuild.config.gnu.cross.exe.debug.160018190.;fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.962743466;fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.input.cpp.638077584">
+		<scannerConfigBuildInfo instanceId="fr.ac6.managedbuild.config.gnu.cross.exe.debug.068233892;fr.ac6.managedbuild.config.gnu.cross.exe.debug.068233892.;fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.392067030;fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.input.cpp.518994649">
 			<autodiscovery enabled="false" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
 		
 			
-		<scannerConfigBuildInfo instanceId="fr.ac6.managedbuild.config.gnu.cross.exe.release.558777211;fr.ac6.managedbuild.config.gnu.cross.exe.release.558777211.;fr.ac6.managedbuild.tool.gnu.cross.c.compiler.900925998;fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c.687003131">
+		<scannerConfigBuildInfo instanceId="fr.ac6.managedbuild.config.gnu.cross.exe.release.536787499;fr.ac6.managedbuild.config.gnu.cross.exe.release.536787499.;fr.ac6.managedbuild.tool.gnu.cross.c.compiler.653736680;fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c.132597548">
 			<autodiscovery enabled="false" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="fr.ac6.managedbuild.config.gnu.cross.exe.release.558777211;fr.ac6.managedbuild.config.gnu.cross.exe.release.558777211.;fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.292468205;fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.input.cpp.574513261">
+		<scannerConfigBuildInfo instanceId="fr.ac6.managedbuild.config.gnu.cross.exe.release.536787499;fr.ac6.managedbuild.config.gnu.cross.exe.release.536787499.;fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.074500006;fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.input.cpp.354426297">
 			<autodiscovery enabled="false" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
 		
