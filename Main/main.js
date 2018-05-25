@@ -85,8 +85,9 @@ SerialPort.list((err, ports) => {
         bot = new Telegraf(token.trim());
         bot.use(commandParts());
 
-        parser.on('data', function(tlp){ //tmp,lgt,ph
+        parser.on('data', function(tlp){ //#lgt,tmp,ph#
             tlp = "1,2,3" // commentare quando ci sarà la scheda vera
+            //#FATTO!#
             // console.log("data: "+tlp);
             if(woody.name === undefined){ return;}
             var status = tlp.split(',');
@@ -130,6 +131,24 @@ SerialPort.list((err, ports) => {
                 ctx.reply("You set the plant as a " + elem.botanical);
             })
         })
+
+        function intervalFunc() {
+            // if(woody.info===undefined){
+            //      // ctx.reply("Set your plant/flower first!");
+            //      return;
+            //  }
+
+            port.write("3", function(err) { //
+                if (err) {
+                    // ctx.reply('error')
+                    return console.log('Error on write: ', err.message);
+                }
+                console.log('message written');
+                // ctx.reply('Ok, I started the sensors')
+            });
+        }
+
+        setInterval(intervalFunc, 1000*60*5);
 
         bot.hears('s', ctx => {
             leggi()
