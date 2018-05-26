@@ -15,6 +15,7 @@ const commandParts = require('./lib/telegraf_command_parts.js');
 const download = require('image-downloader')
 var quiche = require('quiche');
 var chart = quiche('line');
+var sleep = require('sleep');
 
 // var readStream = fs.createReadStream(path.join(__dirname) + '/secret.txt', 'utf8');
 let token = ''
@@ -155,16 +156,24 @@ SerialPort.list((err, ports) => {
             //      return;
             //  }
 
-            port.write("3", function(err) { //
-                if (err) {
-                    // ctx.reply('error')
-                    return console.log('Error on write: ', err.message);
-                }
-                console.log('message written');
-                // ctx.reply('Ok, I started the sensors')
-            });
-        }
+            var r = await scrivi();
+            while(!r){
+                r=await scrivi();
+            }
 
+        }
+        function scrivi(){
+            port.write("3", function(err) { //
+               if (err) {
+                   // ctx.reply('error')
+                   console.log('Error on write: ', err.message);
+                   return false;
+               }
+               return true;
+               console.log('message written');
+               // ctx.reply('Ok, I started the sensors')
+           });
+        }
         setInterval(intervalFunc, 1000*60*5);
 
         // bot.hears('s', ctx => {
@@ -199,6 +208,7 @@ SerialPort.list((err, ports) => {
                     return console.log('Error on write: ', err.message);
                 }
                 console.log('message written');
+                sleep.sleep(2);
                 if(ok)
                     ctx.reply('Ok, water')
                 else
@@ -331,6 +341,7 @@ SerialPort.list((err, ports) => {
                     return console.log('Error on write: ', err.message);
                 }
                 console.log('message written');
+                sleep.sleep(2);
                 if(ok)
                     ctx.reply('Ok, I started the sensors')
                 else
