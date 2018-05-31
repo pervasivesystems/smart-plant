@@ -220,7 +220,7 @@ SerialPort.list((err, ports) => {
              }
             retrivePlant(elem.plantID, (err, result)=>{
                 // console.log(result);
-                if(result.length==0){
+                if(result.length==1){
                     ctx.reply('no information');
                     return;
                 }
@@ -369,8 +369,9 @@ SerialPort.list((err, ports) => {
                     bot.telegram.sendMessage(ctx.chat.id, string, {parse_mode:"Markdown"})
                     return;
                 }
-                var url = images[0].url;
+                var url = images[1].url;
                 console.log(url);
+                console.log(images[0].url);
                 // const download = require('image-downloader')
                 // const options = {
                 //     url: url,
@@ -381,9 +382,9 @@ SerialPort.list((err, ports) => {
 
                 // ctx.replyWithPhoto({ source: fs.createReadStream('./img.jpg')});
                 // bot.telegram.sendPhoto(ctx.chat.id,  {source: fs.readFileSync("./image.jpg")},{caption:string, parse_mode:"Markdown"})
-                // bot.telegram.sendPhoto(ctx.chat.id,url,{caption:string, parse_mode:"Markdown"})
+                bot.telegram.sendPhoto(ctx.chat.id,url,{caption:string, parse_mode:"Markdown"})
                 // bot.telegram.sendPhoto(ctx.chat.id,url)
-                ctx.replyWithPhoto(url)
+                // ctx.replyWithPhoto(url)
                 // console.log(url);
 
                 string  = "\n*Light*: "+woody.info.light.description;
@@ -398,7 +399,7 @@ SerialPort.list((err, ports) => {
         })
 
         bot.command('/setplant', (ctx) => {
-            chatId=ctx.chat.id
+            // chatId=ctx.chat.id
             if(ctx.state.command.args === '') {
                 ctx.reply("name of the plant or flower required \n/setplant plant_name");
                 return;
