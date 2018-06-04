@@ -62,7 +62,7 @@ This is the units used for each information:
 
 ## Interface
 This is some screenshots of the Telegram Bot:
-![setplant](https://raw.githubusercontent.com/pervasivesystems/smart-plant/master/satus.png =100x100)
+![setplant](https://raw.githubusercontent.com/pervasivesystems/smart-plant/master/satus.png)
 ![status](https://raw.githubusercontent.com/pervasivesystems/smart-plant/master/status.png)
 ![graph](https://raw.githubusercontent.com/pervasivesystems/smart-plant/master/graph.png)
 ![info](https://raw.githubusercontent.com/pervasivesystems/smart-plant/master/info.png)
