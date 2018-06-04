@@ -3,12 +3,20 @@ Automate the process of plants irrigation based on the environment using sensors
 
 The plant will be perfectly fed accordingly to the surroundings variables and the user will be always kept up to date.
 
-## Client
+## Features
+1. Smart Plant waters the plant or flower automatically based on the type of plant.
+2. Smart Plant Bot sends you a Telegram message when some parameter is not good.
+3. In every moment you can check the current and the previous statuses of the plant/flower.
+
+
+
+## Hardware
 // TODO
 
 
-## Server
-The Server is a Telegram Bot that running on a Raspberry pi.
+
+## Software
+The core of the project is the Telegram Bot running on a Raspberry pi and manages the plant.
 
 ### Structure
 ![Stack](https://raw.githubusercontent.com/pervasivesystems/smart-plant/master/structure.jpg)
@@ -51,13 +59,19 @@ This is the units used for each information:
 ```
 
 
-## Prototype
-// some photos here
 
 ## Interface
 // some photos here
 
-## How to Use
+### Telegram Commands
+
+- **/setplant** _select which plant you want to manage_
+- **/water** _water manually the plant_
+- **/startsensor** _perform a sensor reading_
+- **/status** _show you the status of the plant_
+- **/info** _show you information of the plant_
+
+## How to Run
 
 ### Step 1
 Compile the code in *Plant* folder on one STM Board and the code in *Server* folder on the other STM Board.
@@ -74,11 +88,12 @@ and then:
 ### Step 3
 Search on Telegram Client the bot: `smart_plant_gj_bot` and start the conversation.
 
+### Final Prototype
+// some photos here
 
 
 ## Presentation
-You find a presentation here.
-[LinkIn](https://github.com/pervasivesystems/smart-plant/blob/master/presentation.pdf)
+You can find a presentation [here](https://github.com/pervasivesystems/smart-plant/blob/master/presentation.pdf)
 
 ## Authors
 * **Jacopo Carlini**  [LinkIn](https://www.linkedin.com/in/jacopo-carlini/)
