@@ -14,7 +14,7 @@ The plant will be perfectly fed accordingly to the surroundings variables and th
 * [**Final Presentation**](https://www.slideshare.net/ceribbo/smart-plant-final-presentation)
 
 
-### Structure
+## Architecture
 ![Stack](https://raw.githubusercontent.com/pervasivesystems/smart-plant/master/structure.jpg)
 
 
