@@ -3,10 +3,10 @@ Automate the process of plants irrigation based on the environment using sensors
 
 The plant will be perfectly fed accordingly to the surroundings variables and the user will be always kept up to date.
 
-## Features
-1. Smart Plant waters the plant or flower automatically based on the type of plant.
-2. Smart Plant Bot sends you a Telegram message when some parameter is not good.
-3. In every moment you can check the current and the previous statuses of the plant/flower.
+## Main Features
+1. **Auto Water**: Smart Plant waters the plant or flower automatically based on the type of plant.
+2. **Alert Notification**: Smart Plant Bot sends you a Telegram message when some parameter is not good.
+3. **Check Status**: In every moment you can check the current and the previous statuses of the plant/flower.
 
 
 
@@ -67,7 +67,7 @@ This is the units used for each information:
 
 - **/setplant** _select which plant you want to manage_
 - **/water** _water manually the plant_
-- **/startsensor** _perform a sensor reading_
+- **/startsensor** _perform a sensors reading_
 - **/status** _show you the status of the plant_
 - **/info** _show you information of the plant_
 
