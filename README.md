@@ -62,10 +62,11 @@ This is the units used for each information:
 
 ## Interface
 This is some screenshots of the Telegram Bot:
-![setplant](https://raw.githubusercontent.com/pervasivesystems/smart-plant/master/satus.png)
-![status](https://raw.githubusercontent.com/pervasivesystems/smart-plant/master/status.png)
-![graph](https://raw.githubusercontent.com/pervasivesystems/smart-plant/master/graph.png)
-![info](https://raw.githubusercontent.com/pervasivesystems/smart-plant/master/info.png)
+
+| | |
+|:-------------------------:|:-------------------------:|
+|<img alt="setplant" src="https://raw.githubusercontent.com/pervasivesystems/smart-plant/master/setplant.png">|<img alt="graph" src="https://raw.githubusercontent.com/pervasivesystems/smart-plant/master/graph.png">|
+|<img alt="status" src="https://raw.githubusercontent.com/pervasivesystems/smart-plant/master/status.png">|<img alt="graph" src="https://raw.githubusercontent.com/pervasivesystems/smart-plant/master/info.png">|
 
 ### Telegram Commands
 
