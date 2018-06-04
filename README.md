@@ -47,7 +47,7 @@ The core of the project is the Telegram Bot running on a Raspberry pi and manage
 
 ### Tools
 * **Firebase**: Is a database where all the data are stored.
-* **Woody Plant Database**: Database from which the Telegram Bot retrieve the information about a plant or flower.
+* **Woody Plant Database**: Database from which the Telegram Bot retrieves the information about a plant or flower.
 * **Telgraf**: It is a Nodejs library used to do the Telegram Bot.
 * **Lora**: It is the wireless communication used between the two STM Board.
 * **Arduino**: Hardware Platform to manage the step motor.  
