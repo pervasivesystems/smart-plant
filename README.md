@@ -3,15 +3,19 @@ Automate the process of plants irrigation based on the environment using sensors
 
 The plant will be perfectly fed accordingly to the surroundings variables and the user will be always kept up to date.
 
-## Authors
-* **Jacopo Carlini**  [LinkedIn](https://www.linkedin.com/in/jacopo-carlini/)
-* **Giacomo Ceribelli**  [LinkedIn](https://www.linkedin.com/in/giacomo-ceribelli/)
-
 ## Main Features
 1. **Auto Water**: Smart Plant waters the plant or flower automatically based on the type of plant.
 2. **Alert Notification**: Smart Plant Bot sends you a Telegram message when some parameter is not good.
 3. **Check Status**: In every moment you can check the current and the previous statuses of the plant/flower.
 
+## Presentation
+* [**First Presentation**](https://www.slideshare.net/ceribbo/smart-plant-first-presentation)
+* [**Second Presentation**](https://www.slideshare.net/ceribbo/smart-plant-second-presentation)
+* [**Final Presentation**](https://www.slideshare.net/ceribbo/smart-plant-final-presentation)
+
+
+### Structure
+![Stack](https://raw.githubusercontent.com/pervasivesystems/smart-plant/master/structure.jpg)
 
 
 ## Hardware
@@ -33,13 +37,13 @@ The Lora Server can receive the commands "1" and "3" via Serial. Then it sends T
 * Arduino:
     * [Servo](https://github.com/pervasivesystems/smart-plant/blob/master/Arduino-Servo/sketch_may31a.ino)
 
-
+### Hardware Schemas
+Coming Soon
+### Hardware Pictures
+Coming Soon
 
 ## Software
 The core of the project is the Telegram Bot running on a Raspberry pi and manages the plant.
-
-### Structure
-![Stack](https://raw.githubusercontent.com/pervasivesystems/smart-plant/master/structure.jpg)
 
 ### Tools
 * **Firebase**: Is a database where all the data are stored.
@@ -113,9 +117,11 @@ and then:
 ### Step 3
 Search on Telegram Client the bot: `smart_plant_gj_bot` and start the conversation.
 
-### Final Prototype
-// some photos here
 
 
-## Presentation
-You can find a presentation [here](https://github.com/pervasivesystems/smart-plant/blob/master/presentation.pdf)
+## Project Members
+* **Jacopo Carlini**  [LinkedIn](https://www.linkedin.com/in/jacopo-carlini/)
+* **Giacomo Ceribelli**  [LinkedIn](https://www.linkedin.com/in/giacomo-ceribelli/)
+
+ ##
+ ![Logo](https://github.com/pervasivesystems/smart-plant/blob/master/Sapienza_Universit___di_Roma-logo-C9225434E8-seeklogo.com%20(1).png "Sapienza")
