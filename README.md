@@ -21,7 +21,7 @@ The plant will be perfectly fed accordingly to the surroundings variables and th
 ## Hardware
 ### Tools
 * **Arduino Board**: Board which controls only the Servo to open the valve.
-* **2 * DISCO-L072CZ-LRWAN1 Board**: Database from which the Telegram Bot retrieve the information about a plant or flower.
+* **2 * DISCO-L072CZ-LRWAN1 Board**: Board to manage Lora communication.
 * **Components**: Soil, temperature, light Sensors and a Servo.
 
 ### Commands
