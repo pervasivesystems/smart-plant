@@ -11,7 +11,7 @@ The plant will be perfectly fed accordingly to the surroundings variables and th
 The Server is a Telegram Bot that running on a Raspberry pi.
 
 ### Structure
-![alt text](https://github.com/pervasivesystems/smart-plant/structure.jpg)
+![Stack](https://raw.githubusercontent.com/pervasivesystems/smart-plant/master/structure.jpg)
 
 ### Tools
 * **Firebase**: Is a database where all the data are stored.
