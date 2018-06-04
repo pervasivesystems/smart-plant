@@ -1,44 +1,30 @@
-# smart-plant
+# Smart Plant
+Automate the process of plants irrigation based on the environment using sensors.
 
-In Linux open Main folder in the terminal and run:
+The plant will be perfectly fed accordingly to the surroundings variables and the user will be always kept up to date.
 
-`npm install`
-
-## Run main.js
-
-run:
-
-`sudo node main.js`
-
-or with npm
-
-`npm start`
-
-## Database
-
-This is the units used for each information
-
-| plantID |      date      | temperature | light | ph   |
-| ------- | -------------- | ----------- | ----- | ---- |
-| integer | timestamp (ms) |     °C      | Lux   | 0-14 |
+## Client
+// TODO
 
 
-**JSON object** in firebase db
-```json
-{
-    "plants":[{
-            "plantID": int,
-            "plant": string,
-            "info":[{
-                    "date": int,
-                    "temperature": int,
-                    "light": int,
-                    "ph": int
-                    },
-                ...
-            ]
-        },
-        ...
-    ]
-}
-```
+## Server
+The Server is a Telegram Bot that running on a Raspberry pi.
+
+### Structure
+![Stack](https://github.com/pervasivesystems/smart-plant/structure.jpg)
+
+### Tools
+* **Firebase**: Is a database where all the data are stored.
+* **Woody Plant Database**: Database from which the Telegram Bot retrieve the information about a plant or flower.
+* **Telgraf**: It is a Nodejs library used to do the Telegram Bot.
+* **Lora**: It is the wireless communication used between the two STM Board.
+* **Arduino**: Hardware Platform to manage the step motor.  
+* **Mbed**: Platform used to program STM32 Boards
+
+
+## Prototype
+// some photos here
+
+## Authors
+* **Jacopo Carlini**  ![LinkIn](https://www.linkedin.com/in/jacopo-carlini/)
+* **Giacomo Ceribelli**  ![LinkIn](https://www.linkedin.com/in/giacomo-ceribelli/)
