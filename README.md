@@ -21,9 +21,64 @@ The Server is a Telegram Bot that running on a Raspberry pi.
 * **Arduino**: Hardware Platform to manage the step motor.  
 * **Mbed**: Platform used to program STM32 Boards
 
+### Database
+
+This is the units used for each information:
+
+| plantID |      date      | temperature | light | ph   |
+| ------- | -------------- | ----------- | ----- | ---- |
+| integer | timestamp (ms) |     °C      | Lux   | 0-14 |
+
+
+**JSON object** in Firebase db
+```json
+{
+    "plants":[{
+            "plantID": int,
+            "plant": string,
+            "info":[{
+                    "date": int,
+                    "temperature": int,
+                    "light": int,
+                    "ph": int
+                    },
+                ...
+            ]
+        },
+        ...
+    ]
+}
+```
+
 
 ## Prototype
 // some photos here
+
+## Interface
+// some photos here
+
+## How to Use
+
+### Step 1
+Compile the code in *Plant* folder on one STM Board and the code in *Server* folder on the other STM Board.
+
+### Step 2
+On Raspberry pi download the *Main* folder and run:
+
+`npm install`
+
+and then:
+
+`npm start`
+
+### Step 3
+Search on Telegram Client the bot: `smart_plant_gj_bot` and start the conversation.
+
+
+
+## Presentation
+You find a presentation here.
+[LinkIn](https://github.com/pervasivesystems/smart-plant/blob/master/presentation.pdf)
 
 ## Authors
 * **Jacopo Carlini**  [LinkIn](https://www.linkedin.com/in/jacopo-carlini/)
