@@ -9,9 +9,9 @@ The plant will be perfectly fed accordingly to the surroundings variables and th
 3. **Check Status**: In every moment you can check the current and the previous statuses of the plant/flower.
 
 ## Presentation
-* [**First Presentation**](https://www.slideshare.net/ceribbo/smart-plant-first-presentation)
+* [**First Presentation**](https://www.slideshare.net/ceribbo/smart-plant-first-presentation-100457174)
 * [**Second Presentation**](https://www.slideshare.net/ceribbo/smart-plant-second-presentation)
-* [**Final Presentation**](https://www.slideshare.net/ceribbo/smart-plant-final-presentation)
+* [**Final Presentation**](https://www.slideshare.net/ceribbo/smart-plant-final-presentation-100457179)
 
 
 ## Architecture
