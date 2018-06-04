@@ -151,15 +151,12 @@ SerialPort.list((err, ports) => {
         })
 
         function intervalFunc() {
-            // if(woody.info===undefined){
-            //      // ctx.reply("Set your plant/flower first!");
-            //      return;
-            //  }
-
-            var r = await scrivi();
-            while(!r){
-                r=await scrivi();
-            }
+            // ATTENZIONE QUI!
+            // var r = await scrivi();
+            // while(!r){
+            //     r=await scrivi();
+            // }
+            scrivi();
 
         }
         function scrivi(){
@@ -223,7 +220,7 @@ SerialPort.list((err, ports) => {
              }
             retrivePlant(elem.plantID, (err, result)=>{
                 // console.log(result);
-                if(result.length==0){
+                if(result.length==1){
                     ctx.reply('no information');
                     return;
                 }
@@ -372,8 +369,9 @@ SerialPort.list((err, ports) => {
                     bot.telegram.sendMessage(ctx.chat.id, string, {parse_mode:"Markdown"})
                     return;
                 }
-                var url = images[0].url;
-                // console.log(url);
+                var url = images[1].url;
+                console.log(url);
+                console.log(images[0].url);
                 // const download = require('image-downloader')
                 // const options = {
                 //     url: url,
@@ -383,8 +381,10 @@ SerialPort.list((err, ports) => {
                 //     .then(({filename,image}) => {
 
                 // ctx.replyWithPhoto({ source: fs.createReadStream('./img.jpg')});
-                // bot.telegram.sendPhoto(ctx.chat.id,  {source: fs.readFileSync("./img.jpg")},{caption:string, parse_mode:"Markdown"})
+                // bot.telegram.sendPhoto(ctx.chat.id,  {source: fs.readFileSync("./image.jpg")},{caption:string, parse_mode:"Markdown"})
                 bot.telegram.sendPhoto(ctx.chat.id,url,{caption:string, parse_mode:"Markdown"})
+                // bot.telegram.sendPhoto(ctx.chat.id,url)
+                // ctx.replyWithPhoto(url)
                 // console.log(url);
 
                 string  = "\n*Light*: "+woody.info.light.description;
@@ -399,6 +399,7 @@ SerialPort.list((err, ports) => {
         })
 
         bot.command('/setplant', (ctx) => {
+            // chatId=ctx.chat.id
             if(ctx.state.command.args === '') {
                 ctx.reply("name of the plant or flower required \n/setplant plant_name");
                 return;
@@ -408,7 +409,8 @@ SerialPort.list((err, ports) => {
                 for (var i = 0; i < result.length; i++) {
                     console.log(result[i]);
                     string = result[i].botanical+"\n";
-                    if(result.link===undefined){
+                    console.log(result[i].link);
+                    if(result[i].link===undefined){
                         ctx.reply("no plant found");
                         break;
                     }
@@ -421,6 +423,7 @@ SerialPort.list((err, ports) => {
             })
         });
         bot.action(/Set (.*)/, (ctx) => {
+            chatId=ctx.chat.id
             var b = ctx.update.callback_query.data.slice(4);
             console.log(b);
             wood_db.searchB(b, (err,result)=>{
@@ -431,6 +434,12 @@ SerialPort.list((err, ports) => {
                 setPlant(elem)
                 woody=result;
                 ctx.reply("You set the plant as a " + elem.botanical);
+                var giorni = 1;
+                if (result.info.water.dry) giorni = 4;
+                if (result.info.water.medium_dry) giorni = 3;
+                if (result.info.water.medium_wet) giorni = 2;
+                if (result.info.water.wet) giorni = 1;
+                setInterval(intervalFunc, 1000*60*60*giorni);
             })
         })
 
@@ -481,8 +490,23 @@ function check(status){
     if(status.ph<woody.info.soilph.min){
         bot.telegram.sendMessage(chatId, "⚠️ PH too Acid!")
     }
-    // TODO: controllare gli altri parametri, se manca acqua annaffiare
-    // console.log(elem.status);
+    var luce = 0;
+    if(woody.info.light.shade) luce = 0;
+    if(woody.info.light.medium) luce = 1;
+    if(woody.info.light.sun) luce = 2;
+
+    if(luce==0)
+        if(status.light > 30 )
+            bot.telegram.sendMessage(chatId, "⚠️ Too Light!")
+    if(luce==1) {
+        if(status.light > 70 )
+            bot.telegram.sendMessage(chatId, "⚠️ Too Light!")
+        if(status.light < 30 )
+            bot.telegram.sendMessage(chatId, "⚠️ Low Light!")
+    }
+    if(luce==2)
+        if(status.light < 70 )
+            bot.telegram.sendMessage(chatId, "⚠️ Low Light!")
 }
 
 
