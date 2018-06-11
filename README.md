@@ -38,7 +38,7 @@ The Lora Server can receive the commands "1" and "3" via Serial. Then it sends T
     * [Servo](https://github.com/pervasivesystems/smart-plant/blob/master/Arduino-Servo/sketch_may31a.ino)
 
 ### Hardware Schema
-![Hardware Schema](https://github.com/pervasivesystems/smart-plant/blob/master/scheme.png)
+![Hardware Schema](https://github.com/pervasivesystems/smart-plant/blob/master/scheme.jpg)
 ### Hardware Picture
 ![Hardware Demonstration](https://github.com/pervasivesystems/smart-plant/blob/master/demonstration.JPG)
 
