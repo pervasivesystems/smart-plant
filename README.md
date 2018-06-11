@@ -28,7 +28,7 @@ The plant will be perfectly fed accordingly to the surroundings variables and th
 The Lora Server can receive the commands "1" and "3" via Serial. Then it sends The command with Lora to the Plant Receiver which is always listening and activate the sensor or the servo on the Arduino
 
 ### Hardware Code implementation
-* Lora Server: 
+* Lora Server:
     * [Main](https://github.com/pervasivesystems/smart-plant/blob/master/Lora-Server/main.cpp)
     * [Lora](https://github.com/pervasivesystems/smart-plant/blob/master/Lora-Server/SX1276ServerLora/ServerLora.cpp)
 * Lora Receiver (Plant):
@@ -40,7 +40,7 @@ The Lora Server can receive the commands "1" and "3" via Serial. Then it sends T
 ### Hardware Schema
 ![Hardware Schema](https://github.com/pervasivesystems/smart-plant/blob/master/scheme.png)
 ### Hardware Picture
-![Hardware Demonstration](https://github.com/pervasivesystems/smart-plant/blob/master/demonstration.JPG)
+![Hardware Demonstration](https://github.com/pervasivesystems/smart-plant/blob/master/description.jpg)
 
 ## Software
 The core of the project is the Telegram Bot running on a Raspberry pi and manages the plant.
