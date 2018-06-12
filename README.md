@@ -40,7 +40,11 @@ The Lora Server can receive the commands "1" and "3" via Serial. Then it sends T
 ### Hardware Schema
 ![Hardware Schema](https://github.com/pervasivesystems/smart-plant/blob/master/scheme.jpg)
 ### Hardware Picture
-![Hardware Demonstration](https://github.com/pervasivesystems/smart-plant/blob/master/demonstration.JPG)
+<p float="left">
+ <img src="https://github.com/pervasivesystems/smart-plant/blob/master/oriz1.JPG" width="45%">
+ &emsp;
+ <img src="https://github.com/pervasivesystems/smart-plant/blob/master/oriz2.JPG" width="45%">
+</p>
 
 ## Software
 The core of the project is the Telegram Bot running on a Raspberry pi and manages the plant.
